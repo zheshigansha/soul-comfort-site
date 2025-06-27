@@ -105,3 +105,22 @@
 成功清除了所有历史遗留问题，通过官方工具链 (`create-next-app`, `shadcn-ui init`) 搭建了一个稳定、可靠的 Next.js (App Router), TypeScript, Tailwind CSS, 和 Shadcn UI 项目骨架。所有依赖均已安装，本地开发服务器 (`npm run dev`) 能够成功启动并渲染默认欢迎页面，无任何错误。项目地基正式完工。
 
 **存档点 (Git Commit):** `50a7f1a`
+
+### 里程碑：国际化功能实现 (Milestone: Internationalization) - 2025-06-27
+
+**状态：** 成功实现中英文双语切换功能，网站可通过不同语言路径访问。
+
+**描述:** 
+成功配置和实现了基于 `next-intl` 的国际化功能。网站现在支持中文(/zh)和英文(/en)两种语言版本，可以通过URL路径前缀进行切换。采用了"基于浏览器设置的自动检测"策略，同时确保了所有URL都包含明确的语言标识。翻译内容通过 JSON 文件管理，便于后续扩展和维护。
+
+**技术要点:**
+- 使用 `next-intl` 库实现国际化路由和内容翻译
+- 配置 `middleware.ts` 处理语言路由重定向
+- 实现 `i18n.ts` 配置语言验证和消息加载
+- 在 `app/[locale]/layout.tsx` 中集成 `NextIntlClientProvider`
+- 通过 `messages/` 目录下的 JSON 文件管理翻译内容
+
+**存档点 (Git Commit):** `cc9fac6`
+
+**注意事项:** 
+当前配置中存在一些关于 `next-intl` API 即将过时的警告，这些不影响功能，但在未来版本中可能需要更新。
