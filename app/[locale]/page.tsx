@@ -8,13 +8,8 @@ export default function Home({ params }: { params: { locale: string } }) {
   const t = useTranslations('Index');
   const { locale } = params;
   
-  // 获取一条随机句子
-  const quote = getRandomQuote();
-  
-  // 刷新函数，获取新的随机句子
-  const refreshQuote = () => {
-    return getRandomQuote();
-  };
+  // 获取一条随机句子作为初始数据
+  const initialQuote = getRandomQuote();
 
   return (
     <>
@@ -27,9 +22,8 @@ export default function Home({ params }: { params: { locale: string } }) {
             </h1>
             <div className="mt-16 flex justify-center">
               <QuoteCard 
-                initialQuote={quote} 
+                initialQuote={initialQuote} 
                 locale={locale} 
-                onRefresh={refreshQuote} 
               />
             </div>
           </div>

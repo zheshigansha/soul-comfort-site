@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import { Quote } from '@/data/quotes';
 import { RefreshCw } from 'lucide-react';
+import { getRandomQuote } from '@/lib/quotes';
 
 interface QuoteCardProps {
   initialQuote: Quote;
   locale: string;
-  onRefresh: () => Quote;
 }
 
-export function QuoteCard({ initialQuote, locale, onRefresh }: QuoteCardProps) {
+export function QuoteCard({ initialQuote, locale }: QuoteCardProps) {
   const [quote, setQuote] = useState<Quote>(initialQuote);
   
   // 根据当前语言选择对应的文本
@@ -21,7 +21,7 @@ export function QuoteCard({ initialQuote, locale, onRefresh }: QuoteCardProps) {
   
   // 处理刷新按钮点击
   const handleRefresh = () => {
-    const newQuote = onRefresh();
+    const newQuote = getRandomQuote();
     setQuote(newQuote);
   };
 
