@@ -15,6 +15,6 @@ export const config = {
   // 匹配所有路径，除了以下特殊路径
   matcher: [
     // 匹配所有路径，除了以 `/api`, `/_next` 或 包含 `.` 的路径 (例如静态文件)
-    '/((?!api|_next|.*\\.).*)'
+     '/((?!api|_next|.*\\.|favicon.ico).*)'
   ]
 };

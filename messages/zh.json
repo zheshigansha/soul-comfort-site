@@ -1,5 +1,9 @@
 {
-    "Index": {
-      "title": "欢迎来到心灵慰藉站"
-    }
+  "Index": {
+    "title": "欢迎来到心灵慰藉站",
+    "dailyQuote": "每一个黎明，都是新的开始。"
+  },
+  "Navigation": {
+    "home": "首页"
   }
+}

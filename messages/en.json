@@ -1,5 +1,9 @@
 {
-    "Index": {
-      "title": "Welcome to Soul Comfort Site"
-    }
+  "Index": {
+    "title": "Welcome to Soul Comfort Site",
+    "dailyQuote": "Every dawn is a new beginning."
+  },
+  "Navigation": {
+    "home": "Home"
   }
+}
