@@ -1,9 +1,24 @@
 {
   "Index": {
     "title": "Welcome to Soul Comfort Site",
-    "dailyQuote": "Every dawn is a new beginning."
+    "dailyQuote": "Every dawn is a new beginning.",
+    "treeHoleCard": "AI Emotional Support",
+    "treeHoleDescription": "Share your thoughts and feelings with our empathetic AI companion."
   },
   "Navigation": {
-    "home": "Home"
+    "home": "Home",
+    "treeHole": "Tree Hole"
+  },
+  "TreeHole": {
+    "title": "AI Tree Hole",
+    "description": "A safe space to share your thoughts and feelings. Our AI is here to listen and support you.",
+    "disclaimer": "Note: This is an AI assistant and not a substitute for professional mental health support. If you're experiencing serious issues, please seek help from qualified professionals.",
+    "startConversation": "Start a conversation by typing a message below..."
+  },
+  "Chat": {
+  "send": "Send",
+  "typing": "AI is typing...",
+  "startConversation": "Start a conversation by typing a message below...",
+  "inputPlaceholder": "Type your message here..."
   }
 }

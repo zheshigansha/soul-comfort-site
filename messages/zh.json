@@ -1,9 +1,24 @@
 {
   "Index": {
     "title": "欢迎来到心灵慰藉站",
-    "dailyQuote": "每一个黎明，都是新的开始。"
+    "dailyQuote": "每一个黎明，都是新的开始。",
+    "treeHoleCard": "AI情感树洞",
+    "treeHoleDescription": "与我们富有同理心的AI伙伴分享你的想法和感受。"
   },
   "Navigation": {
-    "home": "首页"
+    "home": "首页",
+    "treeHole": "心灵树洞"
+  },
+  "TreeHole": {
+    "title": "AI 树洞",
+    "description": "这是一个安全分享您想法和感受的空间。我们的AI助手在这里倾听和支持您。",
+    "disclaimer": "注意：这是一个AI助手，不能替代专业的心理健康支持。如果您正经历严重问题，请寻求专业人士的帮助。",
+    "startConversation": "在下方输入消息开始对话..."
+  },
+  "Chat": {
+  "send": "发送",
+  "typing": "AI正在输入...",
+  "startConversation": "在下方输入消息开始对话...",
+  "inputPlaceholder": "在这里输入您的消息..."
   }
 }

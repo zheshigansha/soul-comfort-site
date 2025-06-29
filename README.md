@@ -187,3 +187,179 @@
 
 **下一步计划:** 
 改进视觉设计，优化用户体验，扩充名言数据库，并开始规划AI树洞功能。
+
+### 里程碑：AI情感树洞功能实现 (Milestone: AI Emotional Support Feature) - 2025-06-28
+
+**状态：** 成功实现了网站第二大核心功能"AI情感树洞"，支持与AI进行情感交流。
+
+**描述:** 
+实现了网站的第二大核心功能——"AI情感树洞"系统。用户可以通过主页入口进入树洞页面，与AI助手进行情感交流对话。系统支持流式响应，提供自然流畅的对话体验。同时，树洞功能也完全支持中英文双语，与网站整体国际化无缝集成。
+
+**技术要点:**
+- 集成智谱AI的GLM-4模型API，实现高质量情感对话
+- 创建完整的聊天界面组件，包括消息展示和输入区域
+- 实现流式响应处理，提供实时打字效果
+- 优化错误处理和加载状态
+- 设计针对情感支持的系统提示词
+
+**遇到的挑战与解决方案:**
+- **API集成问题:** 尝试多种AI服务提供商，最终选择并成功集成智谱AI的GLM-4模型。
+- **流式响应解析:** 针对智谱AI特定的响应格式，实现了自定义解析逻辑，确保正确显示流式文本。
+
+**存档点 (Git Commit):** `d876d52`
+
+## 📋 待开发功能 (Upcoming Features)
+
+以下是计划在未来迭代中实现的功能：
+
+1. **多种对话模式**
+   - 实现"倾听"、"开解"和"扎心"三种不同的AI对话模式
+   - 添加模式切换界面，让用户可以根据需求选择不同的交互风格
+   - 为每种模式设计专门的系统提示词，优化对话体验
+
+2. **移动端体验优化**
+   - 改进响应式布局，确保在各种屏幕尺寸上的最佳显示效果
+   - 优化触摸交互，提升移动设备上的用户体验
+   - 处理虚拟键盘弹出时的布局调整
+   - 添加下拉刷新等移动端常见交互模式
+
+3. **用户反馈机制**
+   - 添加对话评分功能，让用户可以对AI回复进行评价
+   - 实现详细反馈表单，收集用户对系统的建议
+   - 开发反馈数据分析工具，指导产品改进方向
+
+4. **名言收藏功能**
+   - 允许用户收藏喜欢的名言
+   - 创建收藏页面，方便用户查看和管理收藏内容
+   - 添加分享功能，支持将名言分享到社交媒体
+
+5. **内容扩充**
+   - 扩充名言数据库，增加更多分类和内容
+   - 实现按类别筛选名言的功能
+   - 添加定期更新机制，保持内容新鲜度
+
+## 🌐 网站部署计划和API保护措施
+
+### 1. 网站部署步骤
+
+1. **购买域名**
+   - 选择简短、易记、与项目主题相关的域名
+   - 推荐域名服务商：Namecheap、GoDaddy、阿里云等
+
+2. **选择部署平台**
+   - Vercel（推荐）：最适合Next.js项目，部署简单
+   - Netlify：也支持Next.js，有良好的免费计划
+   - Railway：适合需要后端服务的应用
+   - 阿里云/腾讯云：国内访问速度更快
+
+3. **部署前准备**
+   - 创建`.env.production`文件，添加生产环境变量
+   - 确保API密钥安全存储，不要直接提交到代码仓库
+
+4. **使用Vercel部署**
+   - 创建Vercel账号并连接GitHub仓库
+   - 配置环境变量（智谱AI API密钥等）
+   - 点击部署按钮，等待自动构建和部署
+   - 绑定自定义域名
+
+5. **设置分析工具**
+   - 添加Google Analytics或百度统计跟踪用户行为
+   - 设置简单的错误监控（如Sentry）
+
+### 2. API保护措施
+
+1. **验证码系统**
+   - 在用户发送第一条消息前验证身份，防止API被恶意刷取
+   - 推荐使用reCAPTCHA或hCaptcha服务
+   - 实现方案：`npm install react-google-recaptcha`
+
+2. **请求限制系统**
+   - 基于IP地址的每日请求限制（如每IP每日10-20条消息）
+   - 使用Redis或类似工具记录请求次数
+   - 超出限制后提示付费或等待下一周期
+
+3. **邀请链接系统**
+   - 生成唯一邀请码/链接供早期用户测试
+   - 被邀请用户获得额外的免费使用额度
+   - 邀请者也可获得奖励（如额外使用次数）
+
+4. **付费系统集成**
+   - 使用Stripe或PayPal等支付服务
+   - 设计简单的会员等级（基础/高级）
+   - 高级会员获得更高的每日限额和额外功能
+
+# Soul-Comfort Website (心灵慰藉站)
+
+A multilingual website offering emotional support through daily inspirational quotes and AI-powered conversation.
+
+## Features
+
+### 1. Daily Quote
+- Displays random inspirational quotes
+- Supports quote refresh
+- Multilingual support (English/Chinese)
+
+### 2. AI Tree Hole
+- AI-powered emotional support chatbot
+- Uses ZhipuAI's GLM-4 model
+- Four interaction modes:
+  - **Listening Mode**: AI focuses on listening and understanding without judgment
+  - **Comfort Mode**: AI provides empathy, validation, and gentle encouragement
+  - **Mind Challenge Mode**: AI helps identify thought patterns and offers alternative perspectives
+  - **Debate Training Mode**: AI engages in respectful debate to strengthen reasoning skills
+
+## Deployment Plan
+
+### Domain and Hosting
+1. Purchase domain name
+2. Select hosting platform (Vercel, AWS, etc.)
+3. Set up SSL certificate
+
+### Environment Setup
+1. Configure environment variables
+2. Set up database connections
+3. Deploy application
+
+### API Protection
+1. Implement CAPTCHA system
+2. Set request limits
+3. Consider invitation system
+4. Integrate payment system
+
+## Safety Measures
+- Emotion monitoring
+- Session limits
+- Content filtering
+- Emergency resources
+
+## 最新进展 (2025-06-29)
+
+### 里程碑：AI情感树洞多模式功能实现
+
+**状态：** 成功实现了AI情感树洞的多种交互模式，支持中英文双语。
+
+**描述:** 
+在AI树洞功能的基础上，增加了四种不同的交互模式，让用户可以根据需求选择不同的AI回应风格：
+
+1. **倾听模式**：AI专注于倾听用户的想法，不给出评价或建议，只提供情绪价值和共鸣
+2. **安慰模式**：AI提供温和的支持和建议，帮助用户感到安心
+3. **思维挑战模式**：AI通过提出有益的质疑和新视角，帮助用户拓展思维
+4. **辩论训练模式**：AI与用户进行有益的辩论，帮助锻炼思维能力和表达能力
+
+**技术要点:**
+- 实现了模式选择器UI组件，支持中英文双语显示
+- 为每种模式设计了专门的系统提示词，控制AI回复风格
+- 实现了模式切换功能，可以在对话中随时切换模式
+- 优化了模式选择的视觉反馈，让用户清楚当前选择的模式
+- 为每种模式提供了多样化的回复，避免重复
+
+**遇到的挑战与解决方案:**
+- **国际化问题**：通过useEffect获取当前URL路径中的语言代码，实现了组件级别的国际化
+- **模式切换视觉反馈**：通过条件样式类，为当前选中的模式按钮添加不同的样式
+- **API依赖问题**：创建了模拟API响应，为不同模式和语言提供了多样化的回复模板
+
+**下一步计划:** 
+- 集成真实AI API，替换模拟响应
+- 优化移动端体验
+- 添加用户反馈机制
+- 实现对话历史保存功能
