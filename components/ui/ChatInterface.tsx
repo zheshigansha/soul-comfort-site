@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import ModeSelector from "./ModeSelector"; // 导入模式选择器组件
+import { getClientId } from "../../lib/clientId"; // 添加这一行导入客户端ID
 
 export default function ChatInterface() {
   const t = useTranslations("Chat");
@@ -12,6 +13,32 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("listening"); // 默认为倾听模式
   const messagesEndRef = useRef(null);
+  // 添加以下状态
+  const [usageCount, setUsageCount] = useState(0);
+  const [usageLimit, setUsageLimit] = useState(10); // 默认免费限额
+  const [isLimitReached, setIsLimitReached] = useState(false);
+
+  // 添加获取使用次数的函数
+  useEffect(() => {
+    const fetchUsageData = async () => {
+      const clientId = getClientId();
+      if (!clientId) return;
+      
+      try {
+        const response = await fetch(`/api/usage?clientId=${clientId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setUsageCount(data.count || 0);
+          setUsageLimit(data.limit || 10);
+          setIsLimitReached(data.count >= data.limit);
+        }
+      } catch (error) {
+        console.error("获取使用数据失败:", error);
+      }
+    };
+    
+    fetchUsageData();
+  }, []);
 
   // 滚动到底部
   const scrollToBottom = () => {
@@ -46,11 +73,21 @@ export default function ChatInterface() {
   const handleSendMessage = async (message) => {
     if (message.trim() === "") return;
     
+    // 检查使用限制
+    if (isLimitReached) {
+      setMessages(prev => [...prev, { 
+        role: "system", 
+        content: "您已达到免费使用次数上限。请升级为付费会员继续使用。" 
+      }]);
+      return;
+    }
+    
     // 添加用户消息到列表
     setMessages(prev => [...prev, { role: "user", content: message }]);
     setIsLoading(true);
     
     try {
+      const clientId = getClientId();
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -58,7 +95,8 @@ export default function ChatInterface() {
           message,
           mode, // 发送当前模式
           locale: window.location.pathname.split('/')[1] || 'zh', // 从URL获取当前语言
-          messages: messages.filter(msg => msg.role !== "system") // 过滤掉系统消息
+          messages: messages.filter(msg => msg.role !== "system"), // 过滤掉系统消息
+          clientId // 添加客户端ID
         }),
       });
       
@@ -102,9 +140,12 @@ export default function ChatInterface() {
 
   return (
     <div className="flex flex-col h-[80vh] md:h-[70vh] bg-background border rounded-lg shadow-sm">
-      {/* 模式选择器 */}
-      <div className="p-4 border-b">
+      {/* 模式选择器和使用情况 */}
+      <div className="p-4 border-b flex justify-between items-center">
         <ModeSelector currentMode={mode} onModeChange={handleModeChange} />
+        <div className="text-sm text-muted-foreground">
+          已使用 <span className={usageCount >= usageLimit ? "text-red-500 font-bold" : ""}>{usageCount}</span>/{usageLimit} 次
+        </div>
       </div>
       
       {/* 消息列表 */}
@@ -123,7 +164,11 @@ export default function ChatInterface() {
       
       {/* 输入框 */}
       <div className="border-t p-4">
-        <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+        <ChatInput 
+          onSendMessage={handleSendMessage} 
+          isLoading={isLoading}
+          disabled={isLimitReached} // 添加disabled属性
+        />
       </div>
     </div>
   );

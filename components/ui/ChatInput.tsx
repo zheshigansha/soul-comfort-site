@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   isLoading: boolean;
+  disabled?: boolean; // 添加disabled属性
   placeholder?: string;
   buttonText?: string;
 }
@@ -14,6 +15,7 @@ interface ChatInputProps {
 export default function ChatInput({ 
   onSendMessage, 
   isLoading, 
+  disabled = false, // 设置默认值
   placeholder, 
   buttonText 
 }: ChatInputProps) {
@@ -22,7 +24,7 @@ export default function ChatInput({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim() && !isLoading) {
+    if (message.trim() && !isLoading && !disabled) { // 添加 !disabled 检查
       onSendMessage(message);
       setMessage('');
     }
@@ -35,12 +37,12 @@ export default function ChatInput({
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder={placeholder || t("inputPlaceholder") || "输入消息..."}
-        disabled={isLoading}
+        disabled={isLoading || disabled} // 同时考虑loading和disabled状态}
         className="flex-1 p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:opacity-50"
       />
       <button
         type="submit"
-        disabled={!message.trim() || isLoading}
+        disabled={!message.trim() || isLoading || disabled} // 同时考虑loading和disabled状态
         className="p-3 rounded-xl bg-purple-600 text-white hover:bg-purple-700 disabled:bg-purple-400 transition-colors"
         aria-label={buttonText || t("send") || "发送"}
       >

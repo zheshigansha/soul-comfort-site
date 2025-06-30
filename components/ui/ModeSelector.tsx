@@ -1,95 +1,131 @@
+// 文件名: fix-mode-selector.tsx
+// 将此文件保存到项目根目录，然后复制内容替换 components/ui/ModeSelector.tsx
+
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+// 硬编码的英文模式
+const ENGLISH_MODE = true; // 强制使用英文
 
 // 模式选择器组件
 export default function ModeSelector({ currentMode, onModeChange }) {
-  // const t = useTranslations("Modes"); // 注释掉这行，因为没有对应的翻译键
   const [showDescriptions, setShowDescriptions] = useState(false);
-  const [locale, setLocale] = useState("zh");
-
-  // 获取当前语言
-  useEffect(() => {
-    const path = window.location.pathname;
-    const pathLocale = path.split('/')[1];
-    if (pathLocale === 'en' || pathLocale === 'zh') {
-      setLocale(pathLocale);
-    }
-  }, []);
-
-  // 定义模式类型和描述
+  
+  // 定义模式类型和描述 - 全部使用英文
   const modes = [
     {
       id: "listening",
-      name: locale === "en" ? "Listening Mode" : "倾听模式",
-      description: locale === "en" 
-        ? "AI will only listen to your thoughts without giving evaluations or suggestions" 
-        : "AI只会倾听您的想法，不会给出评价或建议"
+      name: "Listening Mode",
+      description: "AI will only listen to your thoughts without giving evaluations or suggestions",
+      icon: "🎧"
     },
     {
       id: "comfort",
-      name: locale === "en" ? "Comfort Mode" : "安慰模式",
-      description: locale === "en" 
-        ? "AI will provide gentle support and suggestions to help you feel at ease" 
-        : "AI会提供温和的支持和建议，帮助您感到安心"
+      name: "Comfort Mode",
+      description: "AI will provide gentle support and suggestions to help you feel at ease",
+      icon: "💫"
     },
     {
       id: "challenge",
-      name: locale === "en" ? "Mind Challenge Mode" : "思维挑战模式",
-      description: locale === "en" 
-        ? "AI will help you challenge thought patterns and provide new perspectives" 
-        : "AI会帮助您挑战思维模式，提供新的视角"
+      name: "Mind Challenge Mode",
+      description: "AI will help you challenge thought patterns and provide new perspectives",
+      icon: "🧠"
     },
     {
       id: "debate",
-      name: locale === "en" ? "Debate Training Mode" : "辩论训练模式",
-      description: locale === "en" 
-        ? "AI will engage in beneficial debate to help you strengthen your reasoning skills" 
-        : "AI会与您进行有益的辩论，帮助您锻炼思维能力"
+      name: "Debate Training Mode",
+      description: "AI will engage in beneficial debate to help you strengthen your reasoning skills",
+      icon: "⚖️"
     }
   ];
 
+  // 按钮文本 - 全部使用英文
+  const viewDescText = "View mode descriptions";
+  const hideDescText = "Hide mode descriptions";
+  const descTitleText = "Mode Descriptions:";
+
   return (
-    <div className="mb-4">
-      <div className="flex flex-wrap gap-2 mb-2">
+    <div className="mb-6">
+      {/* 模式选择按钮 */}
+      <div className="flex flex-wrap gap-3 mb-4">
         {modes.map((mode) => (
-          <button
+          <motion.button
             key={mode.id}
-            className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
-              currentMode === mode.id
-                ? "bg-primary text-primary-foreground font-bold" // 添加font-bold使选中的按钮文字加粗
-                : "bg-muted hover:bg-muted/80"
-            }`}
+            className={`relative px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 
+              ${currentMode === mode.id
+                ? "bg-gradient-to-br from-indigo-500/90 to-purple-600/90 text-white shadow-lg shadow-indigo-500/20"
+                : "bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-gray-800 dark:text-gray-200 shadow-sm"
+              } 
+              flex items-center gap-2 overflow-hidden group`}
             onClick={() => onModeChange(mode.id)}
+            whileTap={{ scale: 0.97 }}
+            whileHover={{ 
+              scale: 1.02,
+              boxShadow: currentMode === mode.id 
+                ? "0 8px 20px rgba(79, 70, 229, 0.3)" 
+                : "0 8px 20px rgba(0, 0, 0, 0.1)" 
+            }}
           >
-            {mode.name}
-          </button>
+            {/* 背景光效 */}
+            {currentMode === mode.id && (
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 animate-pulse"></div>
+            )}
+            
+            {/* 内容 */}
+            <span className="relative z-10">{mode.icon}</span>
+            <span className="relative z-10">{mode.name}</span>
+            
+            {/* 悬停时的光晕效果 */}
+            <div className="absolute -inset-px bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-xl"></div>
+          </motion.button>
         ))}
       </div>
       
-      <button
-        className="text-xs text-muted-foreground hover:underline"
+      {/* 查看/隐藏描述按钮 */}
+      <motion.button
+        className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center gap-1 group"
         onClick={() => setShowDescriptions(!showDescriptions)}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
       >
-        {showDescriptions 
-          ? (locale === "en" ? "Hide mode descriptions" : "隐藏模式说明") 
-          : (locale === "en" ? "View mode descriptions" : "查看模式说明")
-        }
-      </button>
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className={`h-3.5 w-3.5 transition-transform duration-300 ${showDescriptions ? 'rotate-180' : 'rotate-0'}`} 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+        <span className="group-hover:underline">
+          {showDescriptions ? hideDescText : viewDescText}
+        </span>
+      </motion.button>
       
+      {/* 模式描述 */}
       {showDescriptions && (
-        <div className="mt-2 p-3 bg-muted/50 rounded-md text-sm">
-          <h4 className="font-medium mb-2">{locale === "en" ? "Mode Descriptions:" : "模式说明："}</h4>
-          <ul className="space-y-1">
+        <motion.div 
+          className="mt-3 p-4 bg-white/10 dark:bg-gray-800/40 backdrop-blur-lg rounded-xl text-sm border border-white/20 dark:border-gray-700/50 shadow-lg"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <h4 className="font-medium mb-3 text-gray-700 dark:text-gray-300">{descTitleText}</h4>
+          <ul className="space-y-2.5">
             {modes.map((mode) => (
-              <li key={mode.id}>
-                <span className="font-medium">{mode.name}：</span>
-                {mode.description}
+              <li key={mode.id} className="flex items-start gap-2">
+                <span className="mt-0.5">{mode.icon}</span>
+                <div>
+                  <span className="font-medium text-gray-800 dark:text-gray-200">{mode.name}</span>
+                  <span className="mx-1 text-gray-400">—</span>
+                  <span className="text-gray-600 dark:text-gray-400">{mode.description}</span>
+                </div>
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
       )}
     </div>
   );

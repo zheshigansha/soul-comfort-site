@@ -16,9 +16,18 @@
     "startConversation": "Start a conversation by typing a message below..."
   },
   "Chat": {
-  "send": "Send",
-  "typing": "AI is typing...",
-  "startConversation": "Start a conversation by typing a message below...",
-  "inputPlaceholder": "Type your message here..."
+    "send": "Send",
+    "typing": "AI is typing...",
+    "startConversation": "Start a conversation by typing a message below...",
+    "inputPlaceholder": "Type your message here..."
+  },
+  "Modes": {
+    "listeningMode": "Listening Mode",
+    "comfortMode": "Comfort Mode",
+    "challengeMode": "Mind Challenge Mode",
+    "debateMode": "Debate Training Mode",
+    "viewModeDescriptions": "View mode descriptions",
+    "hideModeDescriptions": "Hide mode descriptions",
+    "modeDescriptionsTitle": "Mode Descriptions:"
   }
 }

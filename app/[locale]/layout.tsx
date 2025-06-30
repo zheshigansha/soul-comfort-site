@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import "../globals.css";
+import { ClientProvider } from './providers'; // 添加这一行
 
 export const metadata: Metadata = {
   title: "Soul Comfort Site",
@@ -30,7 +31,9 @@ export default async function RootLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <ClientProvider> {/* 添加这个包装器 */}
+            {children}
+          </ClientProvider>
         </NextIntlClientProvider>
       </body>
     </html>
