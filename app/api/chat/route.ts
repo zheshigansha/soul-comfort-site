@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { ZhipuAI } from "zhipuai-sdk-nodejs-v4";
+import { Readable } from "stream";
 
 // 添加类型定义
 type ChatMode = 'listening' | 'comfort' | 'challenge' | 'debate';
@@ -81,6 +82,49 @@ const enMockResponses: Record<ChatMode, string[]> = {
   ]
 };
 
+// 辅助函数 - 处理响应行
+function processLine(line: string, encoder: TextEncoder, controller: ReadableStreamDefaultController) {
+  // 处理智谱AI特定的响应格式
+  if (line.startsWith('data: ')) {
+    // 提取data:后面的部分
+    const dataContent = line.substring(6).trim();
+
+    // 显式处理[DONE]标记
+    if (dataContent === '[DONE]') {
+      console.log("收到结束标记，流式响应结束");
+      return;
+    }
+
+    // 尝试解析JSON
+    try {
+      const jsonData = JSON.parse(dataContent);
+      const content = jsonData.choices?.[0]?.delta?.content || "";
+      if (content) {
+        console.log("提取的内容:", content);
+        controller.enqueue(encoder.encode(content));
+      }
+    } catch (parseError) {
+      // 只记录错误，不中断处理
+      console.log(`跳过无法解析的数据: "${dataContent}"`);
+    }
+  } 
+  // 处理可能的直接JSON响应
+  else if (line.trim() && line.trim()[0] === '{') {
+    try {
+      const jsonData = JSON.parse(line);
+      const content = jsonData.choices?.[0]?.delta?.content || "";
+      if (content) {
+        controller.enqueue(encoder.encode(content));
+      }
+    } catch (parseError) {
+      // 如果不是JSON但看起来像有意义的内容，可能是纯文本
+      if (line && !line.includes('"id":') && !line.includes('data:')) {
+        controller.enqueue(encoder.encode(line));
+      }
+    }
+  }
+}
+
 export async function POST(req: Request) {
   try {
     // 解析请求数据 - 添加clientId
@@ -133,55 +177,50 @@ export async function POST(req: Request) {
           const encoder = new TextEncoder();
           
           try {
-            // 处理流式响应
-            for await (const chunk of result) {
-              const chunkText = chunk.toString();
-              console.log("收到数据块:", chunkText);
-  
-              // 处理可能的多行数据
-              const lines: string[] = chunkText.split('\n').filter((line: string) => line.trim() !== '');
-  
-              for (const line of lines) {
-                // 处理智谱AI特定的响应格式
-                if (line.startsWith('data: ')) {
-                  // 提取data:后面的部分
-                  const dataContent = line.substring(6).trim();
-      
-                  // 显式处理[DONE]标记
-                  if (dataContent === '[DONE]') {
-                    console.log("收到结束标记，流式响应结束");
-                    continue;
+            // 修复流式处理 - 根据SDK返回类型调整
+            if (result instanceof Readable) {
+              // 如果是Node.js Readable流
+              result.on('data', (chunk) => {
+                try {
+                  const chunkText = chunk.toString();
+                  console.log("收到数据块:", chunkText);
+                  
+                  // 处理可能的多行数据
+                  const lines = chunkText.split('\n').filter(line => line.trim() !== '');
+                  
+                  for (const line of lines) {
+                    processLine(line, encoder, controller);
                   }
-      
-                  // 尝试解析JSON
-                  try {
-                    const jsonData = JSON.parse(dataContent);
-                    const content = jsonData.choices?.[0]?.delta?.content || "";
-                    if (content) {
-                      console.log("提取的内容:", content);
-                      controller.enqueue(encoder.encode(content));
-                    }
-                  } catch (parseError) {
-                    // 只记录错误，不中断处理
-                    console.log(`跳过无法解析的数据: "${dataContent}"`);
-                  }
-                } 
-                // 处理可能的直接JSON响应
-                else if (line.trim() && line.trim()[0] === '{') {
-                  try {
-                    const jsonData = JSON.parse(line);
-                    const content = jsonData.choices?.[0]?.delta?.content || "";
-                    if (content) {
-                      controller.enqueue(encoder.encode(content));
-                    }
-                  } catch (parseError) {
-                    // 如果不是JSON但看起来像有意义的内容，可能是纯文本
-                    if (line && !line.includes('"id":') && !line.includes('data:')) {
-                      controller.enqueue(encoder.encode(line));
-                    }
-                  }
+                } catch (error) {
+                  console.error("处理数据块错误:", error);
                 }
+              });
+              
+              result.on('end', () => {
+                console.log("流式响应结束");
+                controller.close();
+              });
+              
+              result.on('error', (error) => {
+                console.error("流错误:", error);
+                controller.error(error);
+              });
+            } else {
+              // 如果是普通响应对象
+              const responseText = JSON.stringify(result);
+              console.log("收到响应:", responseText);
+              
+              // 从响应中提取文本
+              let content = "";
+              if (result.choices && result.choices[0] && result.choices[0].message) {
+                content = result.choices[0].message.content || "";
               }
+              
+              if (content) {
+                controller.enqueue(encoder.encode(content));
+              }
+              
+              controller.close();
             }
           } catch (error) {
             console.error("流式响应错误:", error);
@@ -189,11 +228,10 @@ export async function POST(req: Request) {
             controller.enqueue(encoder.encode(locale === "en" 
               ? "Sorry, there was an error processing your request." 
               : "抱歉，发生了错误。请稍后再试。"));
-          } finally {
             controller.close();
           }
         }
-      });         
+      });
 
       // 增加使用次数 - 添加此段代码
       try {
@@ -206,7 +244,7 @@ export async function POST(req: Request) {
       } catch (error) {
         console.error("记录使用次数错误:", error);
       }
-
+      
       // 返回流式响应
       return new NextResponse(stream);
       
