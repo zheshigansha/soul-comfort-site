@@ -5,6 +5,9 @@ interface ChatMessage {
   content: string;
 }
 
+// 定义聊天模式类型
+type ChatMode = 'listening' | 'comfort' | 'challenge' | 'debate';
+
 import Link from 'next/link';
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
@@ -17,7 +20,7 @@ export default function ChatInterface() {
   const t = useTranslations("Chat");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [mode, setMode] = useState("listening"); // 默认为倾听模式
+  const [mode, setMode] = useState<ChatMode>("listening"); // 默认为倾听模式
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   // 添加以下状态
   const [usageCount, setUsageCount] = useState(0);
@@ -98,23 +101,27 @@ export default function ChatInterface() {
     }
   }, [isLimitReached]);
 
+  // 模式消息定义
+  const modeMessages: Record<ChatMode, string> = {
+    listening: "已切换到倾听模式。我会专注于倾听您的想法，不会给出评价或建议。",
+    comfort: "已切换到安慰模式。我会提供温和的支持和建议，帮助您感到安心。",
+    challenge: "已切换到思维挑战模式。我会帮助您挑战思维模式，提供新的视角。",
+    debate: "已切换到辩论训练模式。我会与您进行有益的辩论，帮助您锻炼思维能力。"
+  };
+
   // 处理模式变更
   const handleModeChange = (newMode: string) => {
-    setMode(newMode);
+    // 确保是有效的ChatMode
+    if (['listening', 'comfort', 'challenge', 'debate'].includes(newMode)) {
+      setMode(newMode as ChatMode);
     
-    // 可选：添加一条系统消息，告知用户模式已更改
-    const modeMessages = {
-      listening: "已切换到倾听模式。我会专注于倾听您的想法，不会给出评价或建议。",
-      comfort: "已切换到安慰模式。我会提供温和的支持和建议，帮助您感到安心。",
-      challenge: "已切换到思维挑战模式。我会帮助您挑战思维模式，提供新的视角。",
-      debate: "已切换到辩论训练模式。我会与您进行有益的辩论，帮助您锻炼思维能力。"
-    };
-    
-    if (messages.length > 0) {
-      setMessages(prev => [...prev, {
-        role: "system",
-        content: modeMessages[newMode]
-      }]);
+      // 可选：添加一条系统消息，告知用户模式已更改
+      if (messages.length > 0) {
+        setMessages(prev => [...prev, {
+          role: "system",
+          content: modeMessages[newMode as ChatMode]
+        }]);
+      }
     }
   };
 
