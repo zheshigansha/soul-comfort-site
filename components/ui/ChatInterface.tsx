@@ -13,7 +13,7 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("listening"); // 默认为倾听模式
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   // 添加以下状态
   const [usageCount, setUsageCount] = useState(0);
   const [usageLimit, setUsageLimit] = useState(10); // 默认免费限额
@@ -51,7 +51,9 @@ export default function ChatInterface() {
 
   // 滚动到底部
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
