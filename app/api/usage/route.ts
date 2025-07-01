@@ -1,55 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// 在实际项目中，这应该保存在数据库中
-// 这里使用内存存储作为示例
-const usageStore: { [clientId: string]: number } = {};
-const DEFAULT_LIMIT = 10;
+import { getUserUsage, incrementUserUsage } from '../../../lib/storage';
 
 export async function GET(request: NextRequest) {
-  // 从URL参数中获取clientId
-  const { searchParams } = new URL(request.url);
-  const clientId = searchParams.get('clientId');
-
-  if (!clientId) {
-    return NextResponse.json({ error: '缺少客户端ID' }, { status: 400 });
-  }
-
-  // 获取该客户端的使用次数
-  const count = usageStore[clientId] || 0;
+  const clientId = request.nextUrl.searchParams.get('clientId');
   
-  // 这里可以根据不同条件返回不同的限制
-  // 例如，根据用户是否付费来设置不同的限制
-  const limit = DEFAULT_LIMIT;
-
-  return NextResponse.json({
-    clientId,
-    count,
-    limit,
-    isLimitReached: count >= limit
-  });
+  if (!clientId) {
+    return NextResponse.json({ error: "Missing client ID" }, { status: 400 });
+  }
+  
+  // 使用共享存储获取使用数据
+  const usageData = getUserUsage(clientId);
+  
+  return NextResponse.json(usageData);
 }
 
-// 用于增加使用次数的端点
 export async function POST(request: NextRequest) {
-  const { clientId } = await request.json();
-
+  const clientId = request.nextUrl.searchParams.get('clientId');
+  
   if (!clientId) {
-    return NextResponse.json({ error: '缺少客户端ID' }, { status: 400 });
+    return NextResponse.json({ error: "Missing client ID" }, { status: 400 });
   }
-
-  // 增加使用次数
-  if (!usageStore[clientId]) {
-    usageStore[clientId] = 0;
-  }
-  usageStore[clientId] += 1;
-
-  const count = usageStore[clientId];
-  const limit = DEFAULT_LIMIT;
-
-  return NextResponse.json({
-    clientId,
-    count,
-    limit,
-    isLimitReached: count >= limit
-  });
+  
+  // 增加使用计数并返回更新后的数据
+  const updatedUsageData = incrementUserUsage(clientId);
+  
+  return NextResponse.json(updatedUsageData);
 }

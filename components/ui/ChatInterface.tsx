@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import ChatMessage from "./ChatMessage";
@@ -31,6 +32,14 @@ export default function ChatInterface() {
           setUsageCount(data.count || 0);
           setUsageLimit(data.limit || 10);
           setIsLimitReached(data.count >= data.limit);
+          
+          // 存储付费状态信息
+          if (data.isPremium) {
+            localStorage.setItem('premium_status', JSON.stringify({
+              isPremium: data.isPremium,
+              premiumData: data.premiumData
+            }));
+          }
         }
       } catch (error) {
         console.error("获取使用数据失败:", error);
@@ -48,6 +57,39 @@ export default function ChatInterface() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  
+  // 添加检测使用限制的useEffect
+  useEffect(() => {
+    if (isLimitReached) {
+      const locale = window.location.pathname.split('/')[1] || 'zh';
+      const isEnglish = locale === 'en';
+      
+      // 构建升级提示
+      const limitMessage = isEnglish 
+        ? "<p>You've reached your free usage limit. Upgrade to continue the conversation and enjoy unlimited access.</p>" 
+        : "<p>您已达到免费使用次数上限。升级后可继续对话并享受无限访问权限。</p>";
+      
+      const upgradeButton = `
+        <div class="mt-4">
+          <a href="/${locale}/upgrade" class="inline-block bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors">
+            ${isEnglish ? 'Upgrade Now' : '立即升级'}
+          </a>
+        </div>
+      `;
+      
+      // 只有当最后一条消息不是升级提示时，才添加提示
+      setMessages(prev => {
+        const lastMsg = prev[prev.length - 1];
+        if (lastMsg && lastMsg.role === "system" && lastMsg.content.includes("upgrade")) {
+          return prev;
+        }
+        return [...prev, { 
+          role: "system", 
+          content: `${limitMessage} ${upgradeButton}`
+        }];
+      });
+    }
+  }, [isLimitReached]);
 
   // 处理模式变更
   const handleModeChange = (newMode) => {
@@ -75,13 +117,36 @@ export default function ChatInterface() {
     
     // 检查使用限制
     if (isLimitReached) {
-      setMessages(prev => [...prev, { 
-        role: "system", 
-        content: "您已达到免费使用次数上限。请升级为付费会员继续使用。" 
-      }]);
+      const locale = window.location.pathname.split('/')[1] || 'zh';
+      const isEnglish = locale === 'en';
+      
+      // 构建升级提示
+      const limitMessage = isEnglish 
+        ? "<p>You've reached your free usage limit. Upgrade to continue the conversation and enjoy unlimited access.</p>" 
+        : "<p>您已达到免费使用次数上限。升级后可继续对话并享受无限访问权限。</p>";
+      
+      const upgradeButton = `
+        <div class="mt-4">
+          <a href="/${locale}/upgrade" class="inline-block bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors">
+            ${isEnglish ? 'Upgrade Now' : '立即升级'}
+          </a>
+        </div>
+      `;
+      
+      // 只有当最后一条消息不是升级提示时，才添加提示
+      setMessages(prev => {
+        const lastMsg = prev[prev.length - 1];
+        if (lastMsg && lastMsg.role === "system" && lastMsg.content.includes("upgrade")) {
+          return prev;
+        }
+        return [...prev, { 
+          role: "system", 
+          content: `${limitMessage} ${upgradeButton}`
+        }];
+      });
       return;
     }
-    
+      
     // 添加用户消息到列表
     setMessages(prev => [...prev, { role: "user", content: message }]);
     setIsLoading(true);
@@ -135,6 +200,25 @@ export default function ChatInterface() {
       }]);
     } finally {
       setIsLoading(false);
+      
+      // 更新使用次数并检查限制
+      const clientId = getClientId();
+      if (clientId) {
+        try {
+          const usageResponse = await fetch(`/api/usage?clientId=${clientId}`, {
+            method: "POST" // 增加计数
+          });
+          
+          if (usageResponse.ok) {
+            const data = await usageResponse.json();
+            setUsageCount(data.count);
+            setUsageLimit(data.limit);
+            setIsLimitReached(data.isLimitReached);
+          }
+        } catch (error) {
+          console.error("更新使用计数失败:", error);
+        }
+      }
     }
   };
 
