@@ -1,6 +1,13 @@
 "use client";
 
-export default function ChatMessage({ message }) {
+// 导入或定义消息类型
+interface ChatMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
+// 添加类型注解
+export default function ChatMessage({ message }: { message: ChatMessage }) {
   // 根据消息角色设置不同的样式
   const isUser = message.role === "user";
   const isSystem = message.role === "system";
