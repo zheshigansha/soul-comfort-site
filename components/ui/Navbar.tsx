@@ -1,6 +1,8 @@
+'use client';
+
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';  // 添加缺少的导入
-import { usePathname } from 'next/navigation'; // 添加缺少的导入
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Container } from './Container';
 
