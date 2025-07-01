@@ -186,7 +186,7 @@ export async function POST(req: Request) {
                   console.log("收到数据块:", chunkText);
                   
                   // 处理可能的多行数据
-                  const lines = chunkText.split('\n').filter(line => line.trim() !== '');
+                  const lines = chunkText.split('\n').filter((line: string) => line.trim() !== '');
                   
                   for (const line of lines) {
                     processLine(line, encoder, controller);
