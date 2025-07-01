@@ -6,7 +6,6 @@ interface ChatMessage {
   content: string;
 }
 
-// 添加类型注解
 export default function ChatMessage({ message }: { message: ChatMessage }) {
   // 根据消息角色设置不同的样式
   const isUser = message.role === "user";

@@ -14,7 +14,7 @@ export default function UpgradePrompt({ onClose }) {
   
   // 在实际项目中，此函数会调用支付API
   // 现在我们只是模拟一个支付流程
-  const handlePayment = async (productType, productId) => {
+  const handlePayment = async (productType: string, productId: string) => {
     setIsLoading(true);
     
     try {
