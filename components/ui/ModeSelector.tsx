@@ -1,6 +1,3 @@
-// 文件名: fix-mode-selector.tsx
-// 将此文件保存到项目根目录，然后复制内容替换 components/ui/ModeSelector.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -10,7 +7,13 @@ import { motion } from "framer-motion";
 const ENGLISH_MODE = true; // 强制使用英文
 
 // 模式选择器组件
-export default function ModeSelector({ currentMode, onModeChange }) {
+export default function ModeSelector({ 
+  currentMode, 
+  onModeChange 
+}: { 
+  currentMode: string, 
+  onModeChange: (mode: string) => void 
+}) {
   const [showDescriptions, setShowDescriptions] = useState(false);
   
   // 定义模式类型和描述 - 全部使用英文
