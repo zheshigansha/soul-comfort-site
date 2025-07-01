@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server";
 import { ZhipuAI } from "zhipuai-sdk-nodejs-v4";
 
+// 添加类型定义
+type ChatMode = 'listening' | 'comfort' | 'challenge' | 'debate';
+
 // 初始化智谱AI SDK
 const zhipuAI = new ZhipuAI({
   apiKey: process.env.ZHIPU_API_KEY || "", // 从环境变量获取API密钥
 });
 
 // 为不同模式定义系统提示词（中文）
-const zhSystemPrompts = {
+const zhSystemPrompts: Record<ChatMode, string> = {
   listening: "你是一个专注倾听的AI助手。你的主要任务是倾听用户的想法和感受，不要急于提供解决方案，而是通过提问和回应来鼓励用户继续表达。表现出同理心，让用户感到被理解和被重视。",
   comfort: "你是一个提供情感支持的AI助手。你的任务是理解用户的情感状态，提供温暖、理解和支持。使用温和、关怀的语气，避免过度乐观或轻视用户的感受。提供适当的安慰和鼓励，帮助用户感到被理解和支持。",
   challenge: "你是一个思维挑战型AI助手。你的任务是以友好但挑战性的方式回应用户，帮助他们从不同角度思考问题。提出有建设性的问题，指出可能被忽略的因素，但始终保持尊重和支持的态度。",
@@ -15,7 +18,7 @@ const zhSystemPrompts = {
 };
 
 // 为不同模式定义系统提示词（英文）
-const enSystemPrompts = {
+const enSystemPrompts: Record<ChatMode, string> = {
   listening: "You are an AI assistant focused on listening. Your main task is to listen to users' thoughts and feelings without rushing to provide solutions. Encourage further expression through questions and responses. Show empathy to make users feel understood and valued.",
   comfort: "You are an AI assistant providing emotional support. Your task is to understand users' emotional states and offer warmth, understanding, and support. Use a gentle, caring tone, avoiding excessive optimism or dismissing users' feelings. Provide appropriate comfort and encouragement to help users feel understood and supported.",
   challenge: "You are a thought-challenging AI assistant. Your task is to respond to users in a friendly but challenging way, helping them think about issues from different perspectives. Ask constructive questions and point out potentially overlooked factors, while maintaining a respectful and supportive attitude.",
@@ -23,7 +26,7 @@ const enSystemPrompts = {
 };
 
 // 为不同模式定义多样化的回复（中文）- 作为备用
-const zhMockResponses = {
+const zhMockResponses: Record<ChatMode, string[]> = {
   listening: [
     "我在倾听你的想法。能告诉我更多吗？我理解这对你来说很重要。",
     "我明白你的感受，这确实值得关注。你能再多分享一些吗？",
@@ -51,7 +54,7 @@ const zhMockResponses = {
 };
 
 // 为不同模式定义多样化的回复（英文）- 作为备用
-const enMockResponses = {
+const enMockResponses: Record<ChatMode, string[]> = {
   listening: [
     "I'm listening to your thoughts. Could you tell me more? I understand this is important to you.",
     "I hear what you're saying. Would you like to share more about how you feel?",
@@ -91,6 +94,9 @@ export async function POST(req: Request) {
     console.log("收到请求:", { message, mode, locale, clientId });
     console.log("API密钥:", process.env.ZHIPU_API_KEY ? "已设置" : "未设置");
     
+    // 确保mode是有效的ChatMode类型
+    const validMode = (mode as string) in zhSystemPrompts ? (mode as ChatMode) : 'listening';
+    
     try {
       // 尝试调用智谱AI API
       console.log("尝试调用智谱AI API...");
@@ -99,7 +105,7 @@ export async function POST(req: Request) {
       const systemPrompts = locale === "en" ? enSystemPrompts : zhSystemPrompts;
       
       // 获取当前模式的系统提示词
-      const systemPrompt = systemPrompts[mode] || systemPrompts.listening;
+      const systemPrompt = systemPrompts[validMode];
       
       // 调用智谱AI API - 使用正确的方法
       const result = await zhipuAI.createCompletions({
@@ -214,7 +220,7 @@ export async function POST(req: Request) {
       const responses = locale === "en" ? enMockResponses : zhMockResponses;
       
       // 获取当前模式的响应数组
-      const modeResponses = responses[mode] || responses.listening;
+      const modeResponses = responses[validMode];
       
       // 随机选择一个响应
       const randomIndex = Math.floor(Math.random() * modeResponses.length);
