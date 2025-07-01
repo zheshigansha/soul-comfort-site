@@ -184,10 +184,13 @@ export default function ChatInterface() {
       }
       
       // 处理流式响应
+      if (!response.body) {
+        throw new Error("响应体为空");
+      }
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let partialResponse = "";
-      
+            
       // 添加一个空的AI回复，用于流式更新
       setMessages(prev => [...prev, { role: "assistant", content: "" }]);
       
