@@ -1,5 +1,10 @@
 "use client";
 
+interface ChatMessage {
+  role: 'user' | 'assistant' | 'system'; // 更精确的类型定义
+  content: string;
+}
+
 import Link from 'next/link';
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
@@ -10,7 +15,7 @@ import { getClientId } from "../../lib/clientId"; // 添加这一行导入客户
 
 export default function ChatInterface() {
   const t = useTranslations("Chat");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("listening"); // 默认为倾听模式
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -94,7 +99,7 @@ export default function ChatInterface() {
   }, [isLimitReached]);
 
   // 处理模式变更
-  const handleModeChange = (newMode) => {
+  const handleModeChange = (newMode: string) => {
     setMode(newMode);
     
     // 可选：添加一条系统消息，告知用户模式已更改
@@ -114,7 +119,7 @@ export default function ChatInterface() {
   };
 
   // 发送消息
-  const handleSendMessage = async (message) => {
+  const handleSendMessage = async (message: string) => {
     if (message.trim() === "") return;
     
     // 检查使用限制
