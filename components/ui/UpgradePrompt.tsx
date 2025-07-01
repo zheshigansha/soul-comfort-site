@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useClient } from '@/app/[locale]/providers';
 
 export default function UpgradePrompt({ onClose }: { onClose: () => void }) {
+  
   const { clientId } = useClient();
   const [selectedTab, setSelectedTab] = useState('subscription');
   const [isLoading, setIsLoading] = useState(false);
