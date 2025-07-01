@@ -36,7 +36,7 @@ export function QuoteCard({ initialQuote, locale }: QuoteCardProps) {
       </button>
       
       <p className="text-xl text-gray-700 dark:text-gray-300 italic">
-        "{quoteText}"
+          &quot;{quoteText}&quot;
       </p>
       
       {quoteAuthor && (
