@@ -16,9 +16,37 @@
     "startConversation": "在下方输入消息开始对话..."
   },
   "Chat": {
-  "send": "发送",
-  "typing": "AI正在输入...",
-  "startConversation": "在下方输入消息开始对话...",
-  "inputPlaceholder": "在这里输入您的消息..."
+    "send": "发送",
+    "typing": "AI正在输入...",
+    "startConversation": "在下方输入消息开始对话...",
+    "inputPlaceholder": "在这里输入您的消息..."
+  },
+  "Upgrade": {
+    "title": "升级您的账户",
+    "subtitle": "获取AI情感支持服务的无限访问权限",
+    "usageCount": "您已使用 {count}/{limit} 次免费消息",
+    "monthlySubscription": "月度订阅",
+    "payAsYouGo": "按次付费",
+    "perMonth": "$9.99/月",
+    "unlimitedConversations": "无限对话次数",
+    "prioritySupport": "优先支持服务",
+    "allModes": "所有对话模式",
+    "subscribeNow": "立即订阅",
+    "processing": "处理中...",
+    "credits100": "100点数",
+    "credits500": "500点数",
+    "credits1000": "1000点数",
+    "bestValue": "最优价格",
+    "noCommitment": "无月度承诺",
+    "neverExpire": "点数永不过期",
+    "buyCredits": "购买点数",
+    "referralCode": "有推荐码？",
+    "enterCode": "在此输入推荐码",
+    "apply": "应用",
+    "securePayment": "由Creem提供安全支付处理",
+    "returnToChat": "返回聊天",
+    "paymentSuccess": "支付成功！",
+    "paymentFailed": "支付失败，请重试。",
+    "paymentError": "支付处理错误。"
   }
 }

@@ -1,17 +1,24 @@
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';  // 添加缺少的导入
+import { usePathname } from 'next/navigation'; // 添加缺少的导入
 import { useTranslations } from 'next-intl';
 import { Container } from './Container';
 
 export function Navbar({ locale }: { locale: string }) {
-  const t = useTranslations('Navigation');
+  const t = useTranslations('Navigation'); // 初始化翻译函数
+  const router = useRouter();
+  const pathName = usePathname();
   
-  // 获取另一种语言的代码
+  // 获取当前路径的非语言部分
+  const currentPath = pathName.split('/').slice(2).join('/');
+  
+  // 计算另一种语言
   const otherLocale = locale === 'en' ? 'zh' : 'en';
   
-  // 获取当前路径（不包括语言前缀）
-  const currentPath = typeof window !== 'undefined' 
-    ? window.location.pathname.replace(`/${locale}`, '') 
-    : '';
+  const switchLanguage = (newLocale: string) => {
+    const newPath = `/${newLocale}/${currentPath}`;
+    router.push(newPath);
+  };
   
   return (
     <header className="py-4 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-teal-500/10 backdrop-blur-sm border-b border-white/10">
@@ -41,7 +48,7 @@ export function Navbar({ locale }: { locale: string }) {
             
             {/* 语言切换 */}
             <Link 
-              href={`/${otherLocale}${currentPath}`}
+              href={`/${otherLocale}/${currentPath}`}
               className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition"
             >
               {otherLocale === 'en' ? 'English' : '中文'}

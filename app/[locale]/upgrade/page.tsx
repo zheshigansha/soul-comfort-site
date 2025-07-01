@@ -18,14 +18,7 @@ interface UsageData {
 }
 
 export default function UpgradePage({ params }: { params: { locale: string } }) {
-  // 由于我们没有更新翻译文件，这些字符串将直接硬编码
-  // 实际应用中应该从翻译文件获取
-  const isEnglish = params.locale === 'en';
-  
-  const title = isEnglish ? "Upgrade Your Account" : "升级您的账户";
-  const subtitle = isEnglish 
-    ? "Get unlimited access to our AI emotional support services" 
-    : "获取AI情感支持服务的无限访问权限";
+  const t = useTranslations("Upgrade");
   
   const [usageData, setUsageData] = useState<UsageData>({
     count: 0,
@@ -64,16 +57,16 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
           premiumData: data.premium
         }));
         
-        alert(isEnglish ? 'Payment successful!' : '支付成功！');
+        alert(t("paymentSuccess"));
         
         // 重定向回聊天页面
         window.location.href = `/${params.locale}/tree-hole`;
       } else {
-        alert(isEnglish ? 'Payment failed. Please try again.' : '支付失败，请重试。');
+        alert(t("paymentFailed"));
       }
     } catch (error) {
       console.error('支付处理错误:', error);
-      alert(isEnglish ? 'Payment processing error.' : '支付处理错误。');
+      alert(t("paymentError"));
     } finally {
       setIsProcessingPayment(false);
     }
@@ -81,12 +74,12 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
   
   const applyReferralCode = () => {
     if (!referralCode.trim()) {
-      alert(isEnglish ? 'Please enter a referral code' : '请输入推荐码');
+      alert('请输入推荐码');
       return;
     }
     
     // 这里可以添加验证推荐码的逻辑
-    alert(isEnglish ? 'Referral code applied!' : '推荐码已应用！');
+    alert('推荐码已应用！');
   };
   
   useEffect(() => {
@@ -122,17 +115,15 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
             className="flex items-center text-sm text-blue-600 hover:text-blue-800 mb-8"
           >
             <ArrowLeft className="w-4 h-4 mr-1" />
-            {isEnglish ? "Return to Chat" : "返回聊天"}
+            {t("returnToChat")}
           </Link>
           
-          <h1 className="text-4xl font-bold mb-2">{title}</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">{subtitle}</p>
+          <h1 className="text-4xl font-bold mb-2">{t("title")}</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">{t("subtitle")}</p>
           
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-8">
             <p className="text-gray-700 dark:text-gray-300">
-              {isEnglish 
-                ? `You've used ${usageData.count} out of ${usageData.limit} free messages` 
-                : `您已使用 ${usageData.count}/${usageData.limit} 次免费消息`}
+              {t("usageCount", { count: usageData.count, limit: usageData.limit })}
             </p>
             <div className="w-full bg-gray-200 rounded-full h-2.5 my-4">
               <div 
@@ -147,21 +138,21 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border-2 border-transparent hover:border-blue-500 transition">
               <div className="flex items-center mb-4">
                 <Calendar className="w-6 h-6 text-blue-500 mr-2" />
-                <h2 className="text-xl font-bold">{isEnglish ? "Monthly Subscription" : "月度订阅"}</h2>
+                <h2 className="text-xl font-bold">{t("monthlySubscription")}</h2>
               </div>
-              <p className="text-2xl font-bold text-blue-600 mb-4">$9.99/月</p>
+              <p className="text-2xl font-bold text-blue-600 mb-4">{t("perMonth")}</p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{isEnglish ? "Unlimited conversations" : "无限对话次数"}</span>
+                  <span>{t("unlimitedConversations")}</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{isEnglish ? "Priority support" : "优先支持服务"}</span>
+                  <span>{t("prioritySupport")}</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{isEnglish ? "All conversation modes" : "所有对话模式"}</span>
+                  <span>{t("allModes")}</span>
                 </li>
               </ul>
               <button 
@@ -172,11 +163,9 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
                 {isProcessingPayment ? (
                   <span className="flex items-center justify-center">
                     <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    {isEnglish ? "Processing..." : "处理中..."}
+                    {t("processing")}
                   </span>
-                ) : (
-                  isEnglish ? "Subscribe Now" : "立即订阅"
-                )}
+                ) : t("subscribeNow")}
               </button>
             </div>
             
@@ -184,7 +173,7 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
               <div className="flex items-center mb-4">
                 <CreditCard className="w-6 h-6 text-purple-500 mr-2" />
-                <h2 className="text-xl font-bold">{isEnglish ? "Pay As You Go" : "按次付费"}</h2>
+                <h2 className="text-xl font-bold">{t("payAsYouGo")}</h2>
               </div>
               
               <div className="space-y-4 mb-6">
@@ -197,7 +186,7 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
                   onClick={() => setSelectedPlan('credits100')}
                 >
                   <div>
-                    <span className="font-medium">{isEnglish ? "100 Credits" : "100点数"}</span>
+                    <span className="font-medium">{t("credits100")}</span>
                   </div>
                   <span className="font-bold">$4.99</span>
                 </div>
@@ -211,9 +200,9 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
                   onClick={() => setSelectedPlan('credits500')}
                 >
                   <div>
-                    <span className="font-medium">{isEnglish ? "500 Credits" : "500点数"}</span>
+                    <span className="font-medium">{t("credits500")}</span>
                     <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
-                      {isEnglish ? "Best Value" : "最优价格"}
+                      {t("bestValue")}
                     </span>
                   </div>
                   <span className="font-bold">$19.99</span>
@@ -228,7 +217,7 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
                   onClick={() => setSelectedPlan('credits1000')}
                 >
                   <div>
-                    <span className="font-medium">{isEnglish ? "1000 Credits" : "1000点数"}</span>
+                    <span className="font-medium">{t("credits1000")}</span>
                   </div>
                   <span className="font-bold">$34.99</span>
                 </div>
@@ -237,11 +226,11 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{isEnglish ? "No monthly commitment" : "无月度承诺"}</span>
+                  <span>{t("noCommitment")}</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{isEnglish ? "Credits never expire" : "点数永不过期"}</span>
+                  <span>{t("neverExpire")}</span>
                 </li>
               </ul>
               
@@ -253,11 +242,9 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
                 {isProcessingPayment ? (
                   <span className="flex items-center justify-center">
                     <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    {isEnglish ? "Processing..." : "处理中..."}
+                    {t("processing")}
                   </span>
-                ) : (
-                  isEnglish ? "Buy Credits" : "购买点数"
-                )}
+                ) : t("buyCredits")}
               </button>
             </div>
           </div>
@@ -265,27 +252,27 @@ export default function UpgradePage({ params }: { params: { locale: string } }) 
           {/* 推荐码部分 */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
             <h3 className="text-lg font-medium mb-4">
-              {isEnglish ? "Have a referral code?" : "有推荐码？"}
+              {t("referralCode")}
             </h3>
             <div className="flex">
               <input
                 type="text"
                 value={referralCode}
                 onChange={(e) => setReferralCode(e.target.value)}
-                placeholder={isEnglish ? "Enter code here" : "在此输入推荐码"}
+                placeholder={t("enterCode")}
                 className="flex-1 p-2 border border-gray-300 dark:border-gray-600 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button 
                 onClick={applyReferralCode}
                 className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white py-2 px-4 rounded-r-lg font-medium transition"
               >
-                {isEnglish ? "Apply" : "应用"}
+                {t("apply")}
               </button>
             </div>
           </div>
           
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>{isEnglish ? "Secure payment processing by Creem" : "由Creem提供安全支付处理"}</p>
+            <p>{t("securePayment")}</p>
           </div>
         </Container>
       </main>

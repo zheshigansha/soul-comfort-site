@@ -29,5 +29,33 @@
     "viewModeDescriptions": "View mode descriptions",
     "hideModeDescriptions": "Hide mode descriptions",
     "modeDescriptionsTitle": "Mode Descriptions:"
+  },
+  "Upgrade": {
+    "title": "Upgrade Your Account",
+    "subtitle": "Get unlimited access to our AI emotional support services",
+    "usageCount": "You've used {count} out of {limit} free messages",
+    "monthlySubscription": "Monthly Subscription",
+    "payAsYouGo": "Pay As You Go",
+    "perMonth": "$9.99/month",
+    "unlimitedConversations": "Unlimited conversations",
+    "prioritySupport": "Priority support",
+    "allModes": "All conversation modes",
+    "subscribeNow": "Subscribe Now",
+    "processing": "Processing...",
+    "credits100": "100 Credits",
+    "credits500": "500 Credits",
+    "credits1000": "1000 Credits",
+    "bestValue": "Best Value",
+    "noCommitment": "No monthly commitment",
+    "neverExpire": "Credits never expire",
+    "buyCredits": "Buy Credits",
+    "referralCode": "Have a referral code?",
+    "enterCode": "Enter code here",
+    "apply": "Apply",
+    "securePayment": "Secure payment processing by Creem",
+    "returnToChat": "Return to Chat",
+    "paymentSuccess": "Payment successful!",
+    "paymentFailed": "Payment failed. Please try again.",
+    "paymentError": "Payment processing error."
   }
 }
