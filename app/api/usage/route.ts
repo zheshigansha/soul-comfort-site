@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserUsage, incrementUserUsage } from '../../../lib/storage';
+import { getUserUsage, incrementUserUsage } from '../../../lib/db-supabase';
 
 export async function GET(request: NextRequest) {
   const clientId = request.nextUrl.searchParams.get('clientId');
@@ -8,10 +8,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Missing client ID" }, { status: 400 });
   }
   
-  // 使用共享存储获取使用数据
-  const usageData = getUserUsage(clientId);
-  
-  return NextResponse.json(usageData);
+  try {
+    const usageData = await getUserUsage(clientId);
+    return NextResponse.json(usageData);
+  } catch (error) {
+    console.error("Error getting usage data:", error);
+    return NextResponse.json({ error: "Failed to get usage data" }, { status: 500 });
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -21,8 +24,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Missing client ID" }, { status: 400 });
   }
   
-  // 增加使用计数并返回更新后的数据
-  const updatedUsageData = incrementUserUsage(clientId);
-  
-  return NextResponse.json(updatedUsageData);
+  try {
+    const updatedUsageData = await incrementUserUsage(clientId);
+    return NextResponse.json(updatedUsageData);
+  } catch (error) {
+    console.error("Error updating usage data:", error);
+    return NextResponse.json({ error: "Failed to update usage data" }, { status: 500 });
+  }
 }

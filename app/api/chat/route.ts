@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZhipuAI } from "zhipuai-sdk-nodejs-v4";
 import { Readable } from "stream";
+import { incrementUserUsage, isSiteLimitReached, incrementSiteUsage } from "../../../lib/db-supabase";
 
 // 添加类型定义
 type ChatMode = 'listening' | 'comfort' | 'challenge' | 'debate';
@@ -135,6 +136,20 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: locale === "en" ? "Missing client ID" : "缺少客户端ID" }, { status: 400 });
     }
     
+    // 检查站点总量限制
+    try {
+      const siteLimitReached = await isSiteLimitReached();
+      if (siteLimitReached) {
+        const errorMessage = locale === "en" 
+          ? "The site has reached its monthly API usage limit. Please try again next month."
+          : "网站已达到本月API使用总量限制，请下月再试。";
+        return NextResponse.json({ error: errorMessage }, { status: 429 });
+      }
+    } catch (error) {
+      console.error("检查站点限制错误:", error);
+      // 继续处理，不中断用户请求
+    }
+
     console.log("收到请求:", { message, mode, locale, clientId });
     console.log("API密钥:", process.env.ZHIPU_API_KEY ? "已设置" : "未设置");
     
@@ -245,6 +260,13 @@ export async function POST(req: Request) {
         console.error("记录使用次数错误:", error);
       }
       
+      // 增加站点总使用计数
+      try {
+        await incrementSiteUsage();
+      } catch (error) {
+        console.error("增加站点用量错误:", error);
+      }
+      
       // 返回流式响应
       return new NextResponse(stream);
       
@@ -292,6 +314,13 @@ export async function POST(req: Request) {
         }).catch(err => console.error('记录使用次数失败', err));
       } catch (error) {
         console.error("记录使用次数错误:", error);
+      }
+      
+      // 增加站点总使用计数
+      try {
+        await incrementSiteUsage();
+      } catch (error) {
+        console.error("增加站点用量错误:", error);
       }
       
       // 返回流式响应

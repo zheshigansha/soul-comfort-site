@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { paymentRecords, getUserUsage } from '../../../lib/storage';
+import { createPaymentRecord, getUserUsage } from '../../../lib/db-supabase';
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,19 +42,7 @@ export async function POST(request: NextRequest) {
     }
     
     // 保存支付记录
-    const record = {
-      id: paymentId,
-      clientId,
-      plan,
-      premium,
-      createdAt: now.toISOString(),
-      referralCode: referralCode || undefined
-    };
-    
-    paymentRecords.set(clientId, record);
-    
-    // 在实际环境中，这里会返回来自支付网关的响应
-    // 在测试环境中，我们直接模拟支付成功
+    await createPaymentRecord(clientId, plan, premium, referralCode);
     
     return NextResponse.json({
       success: true,
@@ -69,7 +57,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// 获取支付状态
 export async function GET(request: NextRequest) {
   try {
     const clientId = request.nextUrl.searchParams.get('clientId');
@@ -78,12 +65,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Missing client ID" }, { status: 400 });
     }
     
-    // 直接使用共享存储中的getUserUsage获取状态
-    const { isPremium, premiumData } = getUserUsage(clientId);
+    const usageData = await getUserUsage(clientId);
     
     return NextResponse.json({
-      hasPremium: isPremium,
-      premium: premiumData
+      hasPremium: usageData.isPremium,
+      premium: usageData.premiumData
     });
     
   } catch (error) {
