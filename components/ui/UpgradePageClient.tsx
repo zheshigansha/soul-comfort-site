@@ -27,11 +27,9 @@ export default function UpgradePageClient() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getSessionAndPackages = async () => {
-      setLoading(true);
-      const { data: { session } } = await supabase.auth.getSession();
+    setLoading(true);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
-
       if (session) {
         try {
           const response = await fetch('/api/packages');
@@ -40,14 +38,17 @@ export default function UpgradePageClient() {
           }
           const data = await response.json();
           setPackages(data);
+          setError(null);
         } catch (err) {
           setError(t('loginPrompt')); // Re-use for generic error
         }
       }
       setLoading(false);
-    };
+    });
 
-    getSessionAndPackages();
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, [supabase, t]);
 
   const handlePurchase = async (packageId: string) => {
