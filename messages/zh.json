@@ -32,6 +32,13 @@
     "prioritySupport": "优先支持服务",
     "allModes": "所有对话模式",
     "subscribeNow": "立即订阅",
+    "monthlyPlans": "月度订阅计划",
+    "monthlyLimit": "{limit} 次/月",
+    "conversationCount": "{count} 次对话",
+    "purchaseCredits": "购买点数",
+    "payAsYouGo_10_name": "10次对话包",
+    "payAsYouGo_30_name": "30次对话包",
+    "payAsYouGo_100_name": "100次对话包",
     "processing": "处理中...",
     "credits100": "100点数",
     "credits500": "500点数",
@@ -47,6 +54,58 @@
     "returnToChat": "返回聊天",
     "paymentSuccess": "支付成功！",
     "paymentFailed": "支付失败，请重试。",
-    "paymentError": "支付处理错误。"
+    "paymentError": "支付处理错误。",
+    "faq": "常见问题",
+    "faqQuestion1": "支付系统如何运作？",
+    "faqAnswer1": "我们提供两种付款方式：月度订阅可无限次对话，而按次付费套餐则可购买永不过期的对话点数。",
+    "faqQuestion2": "我可以随时取消订阅吗？",
+    "faqAnswer2": "是的，您可以随时取消订阅。在当前计费周期结束前，您仍然可以使用该服务。",
+    "faqQuestion3": "您接受哪些支付方式？",
+    "faqAnswer3": "我们接受主要信用卡和PayPal进行所有交易。所有支付均由我们的支付提供商安全处理。"
+  },
+  "Payment": {
+    "paymentSuccessTitle": "支付成功！",
+    "paymentSuccessDescription": "您的支付已完成，积分已添加到您的账户。",
+    "transactionDetails": "交易详情",
+    "packageName": "套餐名称",
+    "creditsAdded": "已添加对话次数",
+    "transactionDate": "交易日期",
+    "backToChat": "返回聊天",
+    "paymentErrorTitle": "支付失败",
+    "errorMissingParams": "支付处理过程中缺少必要参数。",
+    "errorTransactionNotFound": "找不到相关交易记录。",
+    "errorPaymentIncomplete": "支付未完成，请重试。",
+    "errorVerificationFailed": "支付验证失败，请联系客服。",
+    "errorServerError": "服务器处理支付时出错，请稍后重试。",
+    "backToUpgrade": "返回升级页面"
+  },
+  "Login": {
+    "title": "登录或注册",
+    "email_label": "邮箱地址",
+    "password_label_signin": "你的密码",
+    "password_label_signup": "创建密码",
+    "email_placeholder": "your.email@example.com",
+    "password_placeholder": "你的密码",
+    "button_signin": "登录",
+    "button_signup": "注册",
+    "button_forgot_password": "发送重置邮件",
+    "button_magic_link": "发送魔法链接",
+    "social_provider_text": "通过 {{provider}} 登录",
+    "link_signin": "已经有账户了？登录",
+    "link_signup": "还没有账户？注册",
+    "link_forgot_password": "忘记密码了？",
+    "link_magic_link": "通过魔法链接登录",
+    "return_home": "返回首页"
+  },
+  "UpgradePage": {
+    "title": "升级您的套餐",
+    "description": "选择适合您的套餐，解锁更多功能。",
+    "purchaseButton": "购买",
+    "loginPrompt": "请登录以查看可用套餐。",
+    "loginButton": "登录"
+  },
+  "Navbar": {
+    "home": "首页",
+    "treeHole": "树洞"
   }
 }

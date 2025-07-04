@@ -1,4 +1,24 @@
+import { PrismaClient } from '@prisma/client';
 import { supabase } from './supabase';
+
+// --- Prisma Client Initialization ---
+
+// 在全局范围内声明 prisma，以避免在热重载时创建过多的 Prisma Client 实例
+declare global {
+  var prisma: PrismaClient | undefined;
+}
+
+// 初始化 Prisma Client，并将其挂载到全局对象上
+export const prisma = global.prisma || new PrismaClient({
+  // 可选：在这里添加日志配置
+  // log: ['query', 'info', 'warn', 'error'],
+});
+
+if (process.env.NODE_ENV !== 'production') {
+  global.prisma = prisma;
+}
+
+// --- Existing Supabase Helper Functions ---
 
 const FREE_USAGE_LIMIT = 10;
 
@@ -146,49 +166,6 @@ export async function incrementSiteUsage() {
 export async function isSiteLimitReached() {
   const siteUsage = await getSiteUsage();
   return siteUsage.total_count >= siteUsage.max_limit;
-}
-
-// 支付相关操作
-export async function createPaymentRecord(clientId: string, plan: string, premium: any, referralCode?: string) {
-  const user = await getOrCreateUser(clientId);
-  
-  // 检查是否已有支付记录
-  const { data: existingPayment } = await supabase
-    .from('payments')
-    .select('*')
-    .eq('user_id', user.id)
-    .single();
-  
-  const paymentData = {
-    user_id: user.id,
-    plan,
-    premium_type: premium.type,
-    expires_at: premium.expiresAt,
-    unlimited: premium.unlimited || false,
-    credits: premium.credits || null,
-    referral_code: referralCode || null
-  };
-  
-  if (existingPayment) {
-    // 更新现有记录
-    const { data, error } = await supabase
-      .from('payments')
-      .update(paymentData)
-      .eq('id', existingPayment.id)
-      .select();
-      
-    if (error) throw error;
-    return data;
-  } else {
-    // 创建新记录
-    const { data, error } = await supabase
-      .from('payments')
-      .insert([paymentData])
-      .select();
-      
-    if (error) throw error;
-    return data;
-  }
 }
 
 // 辅助函数

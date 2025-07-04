@@ -41,6 +41,13 @@
     "prioritySupport": "Priority support",
     "allModes": "All conversation modes",
     "subscribeNow": "Subscribe Now",
+    "monthlyPlans": "Monthly Subscription Plans",
+    "monthlyLimit": "{limit} conversations/month",
+    "conversationCount": "{count} conversations",
+    "purchaseCredits": "Purchase Credits",
+    "payAsYouGo_10_name": "10-Conversation Pack",
+    "payAsYouGo_30_name": "30-Conversation Pack",
+    "payAsYouGo_100_name": "100-Conversation Pack",
     "processing": "Processing...",
     "credits100": "100 Credits",
     "credits500": "500 Credits",
@@ -56,6 +63,57 @@
     "returnToChat": "Return to Chat",
     "paymentSuccess": "Payment successful!",
     "paymentFailed": "Payment failed. Please try again.",
-    "paymentError": "Payment processing error."
+    "paymentError": "Payment processing error.",
+    "faq": "Frequently Asked Questions",
+    "faqQuestion1": "How does the payment system work?",
+    "faqAnswer1": "We offer two payment options: monthly subscriptions for unlimited conversations, and pay-as-you-go packages where you can purchase conversation credits that never expire.",
+    "faqQuestion2": "Can I cancel my subscription anytime?",
+    "faqAnswer2": "Yes, you can cancel your subscription at any time. You'll still have access to the service until the end of your billing period.",
+    "faqQuestion3": "What payment methods do you accept?",
+    "faqAnswer3": "We accept major credit cards and PayPal for all transactions. All payments are securely processed by our payment provider."
+  },
+  "Payment": {
+    "paymentSuccessTitle": "Payment Successful!",
+    "paymentSuccessDescription": "Your payment has been completed and credits have been added to your account.",
+    "transactionDetails": "Transaction Details",
+    "packageName": "Package Name",
+    "creditsAdded": "Credits Added",
+    "transactionDate": "Transaction Date",
+    "backToChat": "Back to Chat",
+    "paymentErrorTitle": "Payment Failed",
+    "errorMissingParams": "Missing required parameters during payment processing.",
+    "errorTransactionNotFound": "Transaction record not found.",
+    "errorPaymentIncomplete": "Payment was not completed. Please try again.",
+    "errorVerificationFailed": "Payment verification failed. Please contact support.",
+    "errorServerError": "Server error while processing payment. Please try again later.",
+    "backToUpgrade": "Back to Upgrade Page"
+  },
+  "Login": {
+    "title": "Sign In or Sign Up",
+    "email_label": "Email address",
+    "password_label_signin": "Your password",
+    "password_label_signup": "Create a password",
+    "email_placeholder": "your.email@example.com",
+    "password_placeholder": "Your password",
+    "button_signin": "Sign In",
+    "button_signup": "Sign Up",
+    "button_forgot_password": "Send reset instructions",
+    "button_magic_link": "Send Magic Link",
+    "social_provider_text": "Sign in with {{provider}}",
+    "link_signin": "Already have an account? Sign in",
+    "link_signup": "Don't have an account? Sign up",
+    "link_forgot_password": "Forgot your password?",
+    "link_magic_link": "Sign in with Magic Link",
+    "return_home": "Return to Home"
+  },
+  "UpgradePage": {
+    "title": "Upgrade Your Plan",
+    "description": "Choose the package that's right for you and unlock more features.",
+    "purchaseButton": "Purchase",
+    "loginPrompt": "Please log in to view available packages.",
+    "loginButton": "Log In"
+  },
+  "Navbar": {
+    "home": "Home"
   }
 }

@@ -1,63 +1,65 @@
-'use client';
+// 路径: components/ui/Navbar.tsx
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 import { useTranslations } from 'next-intl';
-import { Container } from './Container';
+import { getLocale } from 'next-intl/server';
+import { Button } from './button'; // 确保你的项目中 Button 组件路径正确
+import LogoutButton from './LogoutButton'; // 我们马上会创建这个文件
+import LocaleSwitcher from './LocaleSwitcher'; // 确保语言切换组件路径正确
 
-export function Navbar({ locale }: { locale: string }) {
-  const t = useTranslations('Navigation'); // 初始化翻译函数
-  const router = useRouter();
-  const pathName = usePathname();
-  
-  // 获取当前路径的非语言部分
-  const currentPath = pathName.split('/').slice(2).join('/');
-  
-  // 计算另一种语言
-  const otherLocale = locale === 'en' ? 'zh' : 'en';
-  
-  const switchLanguage = (newLocale: string) => {
-    const newPath = `/${newLocale}/${currentPath}`;
-    router.push(newPath);
-  };
-  
+export async function Navbar() {
+  const t = useTranslations('Navigation');
+  const locale = await getLocale();
+
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
-    <header className="py-4 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-teal-500/10 backdrop-blur-sm border-b border-white/10">
-      <Container>
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Link href={`/${locale}`} className="text-xl font-medium text-gray-800 dark:text-white">
-              Soul Comfort
-            </Link>
-          </div>
-          
-          <div className="flex items-center space-x-6">
-            {/* 导航链接 */}
-            <Link 
-              href={`/${locale}`} 
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition"
+    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex items-center h-14 max-w-screen-2xl">
+        <div className="flex items-center mr-4">
+          <Link href="/" className="mr-6 font-bold">
+            Soul Comfort
+          </Link>
+          <nav className="flex items-center gap-6 text-sm">
+            <Link
+              href={`/${locale}`}
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
             >
               {t('home')}
             </Link>
-            
-            <Link 
-              href={`/${locale}/tree-hole`} 
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition"
+            <Link
+              href={`/${locale}/tree-hole`}
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
             >
               {t('treeHole')}
             </Link>
-            
-            {/* 语言切换 */}
-            <Link 
-              href={`/${otherLocale}/${currentPath}`}
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition"
+            <Link
+              href={`/${locale}/upgrade`}
+              className="font-semibold text-primary transition-colors hover:text-primary/80"
             >
-              {otherLocale === 'en' ? 'English' : '中文'}
+              Upgrade
             </Link>
-          </div>
-        </nav>
-      </Container>
-    </header>
+          </nav>
+        </div>
+        <div className="flex items-center justify-end flex-1 gap-4">
+          <LocaleSwitcher />
+          {user ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-muted-foreground">{user.email}</span>
+              <LogoutButton />
+            </div>
+          ) : (
+            <Button asChild>
+              <Link href={`/${locale}/login`}>Login</Link>
+            </Button>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 }
