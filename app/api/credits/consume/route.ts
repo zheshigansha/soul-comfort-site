@@ -84,8 +84,8 @@ export async function POST(req: NextRequest) {
 }
 
 // 检查用户是否有足够积分的辅助函数
-// 可以在其他API中使用这个函数来验证用户是否可以使用特定功能
-export async function checkCredits(userId: string, amount = 1) {
+// 关键改动：移除了 'export' 关键字，使其成为文件私有函数
+async function checkCredits(userId: string, amount = 1) {
   try {
     const supabase = createRouteHandlerClient({ cookies })
     

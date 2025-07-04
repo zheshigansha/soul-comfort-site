@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { Navbar } from "@/components/ui/Navbar";
 import { AlertCircle, ArrowLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
@@ -31,7 +30,6 @@ export default function PaymentErrorPage({ params }: { params: { locale: string 
 
   return (
     <>
-      <Navbar locale={params.locale} />
       <main className="min-h-screen bg-gradient-to-br from-red-50 via-gray-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Container className="py-20">
           <div className="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">

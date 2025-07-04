@@ -1,32 +1,30 @@
 process.env.ADMIN_KEY = "42d4089c1173f415b6ebeb58dbb16a8306d249e6a271320199e60c1bf555a20f";
 
 import { NextResponse } from "next/server";
-import { getSiteUsage } from "@/lib/db-supabase";
-import { supabase } from "@/lib/supabase";
+// import { getSiteUsage } from "@/lib/db-supabase"; // 移除数据库依赖
+// import { supabase } from "@/lib/supabase"; // 移除数据库依赖
+
+// 模拟的获取站点使用情况函数
+async function getMockSiteUsage() {
+  console.log("正在使用模拟的 getSiteUsage 函数");
+  const currentMonth = new Date().toISOString().slice(0, 7);
+  return Promise.resolve({
+    month: currentMonth,
+    total_count: 123, // 模拟数据
+    max_limit: 1000,  // 模拟数据
+  });
+}
 
 // 获取站点使用情况
 export async function GET(request: Request) {
   try {
-    // 简单验证管理员访问权限
     const adminKey = request.headers.get('x-admin-key');
-
-    // 详细调试信息
-    console.log("接收到的管理员密钥:", adminKey);
-    console.log("环境变量中的密钥:", process.env.ADMIN_KEY);
-    console.log("密钥比较结果:", adminKey === process.env.ADMIN_KEY);
-    console.log("请求头:", Object.fromEntries(request.headers));
-    
     if (adminKey !== process.env.ADMIN_KEY) {
-      console.log("密钥验证失败，返回403");
-      return NextResponse.json({ 
-        error: "无权访问管理员API",
-        providedKey: adminKey ? `${adminKey.substring(0, 3)}...${adminKey.substring(adminKey.length - 3)}` : "未提供",
-        keyLength: adminKey ? adminKey.length : 0
-      }, { status: 403 });
+      return NextResponse.json({ error: "无权访问管理员API" }, { status: 403 });
     }
     
-    const data = await getSiteUsage();
-    console.log("成功获取站点使用数据:", data);
+    // 使用模拟函数
+    const data = await getMockSiteUsage();
     return NextResponse.json(data);
   } catch (error) {
     console.error("获取站点使用量错误:", error);
@@ -41,33 +39,17 @@ export async function GET(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const { maxLimit, adminKey } = await request.json();
-    
-    // 调试信息
-    console.log("PATCH请求:", { maxLimit, adminKeyProvided: !!adminKey });
-    console.log("环境变量中的密钥:", process.env.ADMIN_KEY);
-    
-    // 验证管理员密钥
     if (adminKey !== process.env.ADMIN_KEY) {
-      console.log("PATCH - 密钥验证失败");
       return NextResponse.json({ error: "管理员密钥无效" }, { status: 403 });
     }
     
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    console.log("更新月份:", currentMonth);
-    
-    const { data, error } = await supabase
-      .from('site_usage')
-      .update({ max_limit: maxLimit })
-      .eq('month', currentMonth)
-      .select();
-      
-    if (error) {
-      console.error("Supabase更新错误:", error);
-      throw error;
-    }
-    
-    console.log("限制更新成功:", data);
-    return NextResponse.json(data);
+    console.log(`模拟更新限制为: ${maxLimit}`);
+    // 直接返回成功的模拟数据
+    return NextResponse.json([{
+      month: new Date().toISOString().slice(0, 7),
+      max_limit: maxLimit,
+      total_count: 123 // 维持模拟数据
+    }]);
   } catch (error) {
     console.error("更新站点使用量限制错误:", error);
     return NextResponse.json({ 
@@ -81,33 +63,18 @@ export async function PATCH(request: Request) {
 export async function POST(request: Request) {
   try {
     const { adminKey } = await request.json();
-    
-    // 调试信息
-    console.log("POST请求 - 重置计数:", { adminKeyProvided: !!adminKey });
-    
-    // 验证管理员密钥
     if (adminKey !== process.env.ADMIN_KEY) {
-      console.log("POST - 密钥验证失败");
       return NextResponse.json({ error: "管理员密钥无效" }, { status: 403 });
     }
-    
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    
-    const { data, error } = await supabase
-      .from('site_usage')
-      .update({ total_count: 0 })
-      .eq('month', currentMonth)
-      .select();
-      
-    if (error) {
-      console.error("Supabase重置错误:", error);
-      throw error;
-    }
-    
-    console.log("使用计数重置成功:", data);
+
+    console.log("模拟重置使用量计数");
     return NextResponse.json({ 
-      message: "使用量计数已重置", 
-      data 
+      message: "使用量计数已成功模拟重置", 
+      data: [{
+        month: new Date().toISOString().slice(0, 7),
+        total_count: 0, // 重置为0
+        max_limit: 1000
+      }] 
     });
   } catch (error) {
     console.error("重置使用量计数错误:", error);
@@ -121,14 +88,9 @@ export async function POST(request: Request) {
 // 辅助端点 - 检查环境变量是否正确加载
 export async function OPTIONS() {
   try {
-    const adminKeyStatus = process.env.ADMIN_KEY ? 
-      `已设置 (长度: ${process.env.ADMIN_KEY.length})` : "未设置";
-    
-    const supabaseUrlStatus = process.env.NEXT_PUBLIC_SUPABASE_URL ? 
-      "已设置" : "未设置";
-    
-    const supabaseKeyStatus = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 
-      "已设置" : "未设置";
+    const adminKeyStatus = process.env.ADMIN_KEY ? `已设置 (长度: ${process.env.ADMIN_KEY.length})` : "未设置";
+    const supabaseUrlStatus = process.env.NEXT_PUBLIC_SUPABASE_URL ? "已设置" : "未设置";
+    const supabaseKeyStatus = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "已设置" : "未设置";
     
     return NextResponse.json({
       envStatus: {

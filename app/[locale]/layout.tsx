@@ -29,14 +29,21 @@
       return (
         <html lang={locale}>
           <body>
-            <NextIntlClientProvider messages={messages}>
-              <ClientProvider>
-                <div className="flex flex-col min-h-screen">
-                  <Navbar /> {/* <-- 在这里使用服务端的 Navbar */}
-                  <main className="flex-grow">{children}</main> {/* <-- 你的页面内容会显示在这里 */}
-                </div>
-              </ClientProvider>
-            </NextIntlClientProvider>
+            {/*
+              * 关键改动:
+              * 1. 将 Navbar 移出 NextIntlClientProvider。
+              *    这样，作为服务端组件的 Navbar 就可以在服务端正确渲染，
+              *    而不会被客户端组件包裹，从而避免了水合作用错误。
+              * 2. 将需要客户端上下文的 {children} (即页面内容) 保留在 Provider 内部。
+            */}
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <NextIntlClientProvider messages={messages}>
+                <ClientProvider>
+                  <main className="flex-grow">{children}</main>
+                </ClientProvider>
+              </NextIntlClientProvider>
+            </div>
           </body>
         </html>
       );

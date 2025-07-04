@@ -3,14 +3,15 @@
 import Link from 'next/link';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { useTranslations } from 'next-intl';
-import { getLocale } from 'next-intl/server';
-import { Button } from './button'; // 确保你的项目中 Button 组件路径正确
-import LogoutButton from './LogoutButton'; // 我们马上会创建这个文件
-import LocaleSwitcher from './LocaleSwitcher'; // 确保语言切换组件路径正确
+// 关键改动：导入 getTranslations 和 getLocale，而不是 useTranslations
+import { getTranslations, getLocale } from 'next-intl/server'; 
+import { Button } from './button';
+import LogoutButton from './LogoutButton';
+import LocaleSwitcher from './LocaleSwitcher';
 
 export async function Navbar() {
-  const t = useTranslations('Navigation');
+  // 关键改动：使用 await getTranslations() 在服务端获取翻译函数
+  const t = await getTranslations('Navigation');
   const locale = await getLocale();
 
   const supabase = createServerComponentClient({ cookies });
@@ -22,7 +23,7 @@ export async function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex items-center h-14 max-w-screen-2xl">
         <div className="flex items-center mr-4">
-          <Link href="/" className="mr-6 font-bold">
+          <Link href={`/${locale}`} className="mr-6 font-bold">
             Soul Comfort
           </Link>
           <nav className="flex items-center gap-6 text-sm">

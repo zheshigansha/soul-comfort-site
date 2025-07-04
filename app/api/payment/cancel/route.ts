@@ -3,10 +3,12 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
+  // 关键改动：将 searchParams 的定义提升到 try-catch 外部
+  const searchParams = req.nextUrl.searchParams
+  const locale = searchParams.get('locale') || 'zh'
+
   try {
-    const searchParams = req.nextUrl.searchParams
     const transactionId = searchParams.get('transaction_id')
-    const locale = searchParams.get('locale') || 'zh'
     
     if (transactionId) {
       const supabase = createRouteHandlerClient({ cookies })
@@ -26,6 +28,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('处理支付取消错误:', error)
     // 出错时也重定向回升级页面
-    return NextResponse.redirect(new URL(`/${searchParams.get('locale') || 'zh'}/upgrade?payment=error`, req.url))
+    // 现在这里的 locale 变量可以被正确访问了
+    return NextResponse.redirect(new URL(`/${locale}/upgrade?payment=error`, req.url))
   }
 }

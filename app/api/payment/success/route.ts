@@ -4,11 +4,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { capturePayPalOrder } from '@/lib/paypal-client'
 
 export async function GET(req: NextRequest) {
+  // 关键改动：将 searchParams 和 locale 的定义提升到 try-catch 外部
+  const searchParams = req.nextUrl.searchParams
+  const locale = searchParams.get('locale') || 'zh'
+  
   try {
-    const searchParams = req.nextUrl.searchParams
     const transactionId = searchParams.get('transaction_id')
     const paypalOrderId = searchParams.get('token') // PayPal在回调时会添加token参数
-    const locale = searchParams.get('locale') || 'zh'
     
     if (!transactionId || !paypalOrderId) {
       console.error('缺少必要参数:', { transactionId, paypalOrderId })
@@ -107,6 +109,7 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     console.error('处理支付成功回调错误:', error)
-    return NextResponse.redirect(new URL(`/${searchParams.get('locale') || 'zh'}/payment-error?error=server_error`, req.url))
+    // 现在这里的 locale 变量可以被正确访问了
+    return NextResponse.redirect(new URL(`/${locale}/payment-error?error=server_error`, req.url))
   }
 }

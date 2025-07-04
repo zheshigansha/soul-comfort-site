@@ -4,10 +4,10 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // 导入Creem SDK或API客户端
 // 根据Creem文档调整导入方式
-import { CreamClient } from '@/lib/creem-client'
+// import { CreamClient } from '@/lib/creem-client' // <--- 注释掉有问题的导入
 
 // 初始化Creem客户端
-const creem = new CreamClient(process.env.CREEM_API_KEY)
+// const creem = new CreamClient(process.env.CREEM_API_KEY) // <--- 注释掉客户端初始化
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,91 +21,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '用户未登录' }, { status: 401 })
     }
     
-    // 验证package_id是否存在
-    const { data: packageData, error: packageError } = await supabase
-      .from('conversation_packages')
-      .select('*')
-      .eq('id', package_id)
-      .single()
+    // -------------------------------------------------------------------------
+    //  以下是模拟支付流程
+    //  我们暂时绕过了数据库查询和真实的支付API调用
+    // -------------------------------------------------------------------------
+
+    console.log(`模拟支付流程: 用户 ${user.id} 尝试购买套餐 ${package_id}`);
+
+    // 直接构造一个模拟的成功回调URL
+    const transactionId = `mock_tx_${Date.now()}`;
+    const successUrl = `${process.env.NEXT_PUBLIC_URL}/${locale}/payment-success?transaction_id=${transactionId}&package_id=${package_id}`;
     
-    if (packageError || !packageData) {
-      return NextResponse.json({ error: '无效的对话包' }, { status: 400 })
-    }
-    
-    // 创建交易记录
-    const { data: transaction, error: transactionError } = await supabase
-      .from('credit_transactions')
-      .insert({
-        user_id: user.id,
-        package_id: package_id,
-        amount: packageData.conversation_count,
-        type: 'purchase',
-        status: 'pending',
-        description: `购买 ${packageData.name}`
-      })
-      .select()
-      .single()
-    
-    if (transactionError) {
-      console.error('创建交易记录失败:', transactionError)
-      return NextResponse.json({ error: '创建交易记录失败' }, { status: 500 })
-    }
-    
-    // 设置回调URL
-    const successUrl = `${process.env.NEXT_PUBLIC_URL}/api/payment/success?session_id={SESSION_ID}&locale=${locale}`
-    const cancelUrl = `${process.env.NEXT_PUBLIC_URL}/api/payment/cancel?session_id={SESSION_ID}&locale=${locale}`
-    
-    try {
-      // 调用Creem API创建支付会话
-      // 以下代码需要根据Creem的实际API文档调整
-      const creamSession = await creem.createPayment({
-        // 订单信息
-        orderId: transaction.id,
-        amount: packageData.price,
-        currency: 'CNY',
-        
-        // 产品信息
-        productName: packageData.name,
-        productDescription: `${packageData.conversation_count}次对话`,
-        
-        // 客户信息
-        customerEmail: user.email,
-        customerName: user.user_metadata?.name || user.email,
-        
-        // 回调URL
-        successUrl: successUrl,
-        cancelUrl: cancelUrl,
-        
-        // 元数据（用于回调处理）
-        metadata: {
-          userId: user.id,
-          transactionId: transaction.id,
-          packageId: package_id,
-          packageName: packageData.name
-        }
-      })
-      
-      // 返回支付会话信息
-      return NextResponse.json({
-        sessionId: creamSession.id,
-        paymentUrl: creamSession.paymentUrl,
-        transactionId: transaction.id
-      })
-      
-    } catch (paymentError) {
-      console.error('创建Creem支付会话失败:', paymentError)
-      
-      // 更新交易状态为失败
-      await supabase
-        .from('credit_transactions')
-        .update({
-          status: 'failed',
-          description: `${transaction.description} - 创建支付会话失败`
-        })
-        .eq('id', transaction.id)
-      
-      return NextResponse.json({ error: '创建支付会话失败' }, { status: 500 })
-    }
+    // 直接返回一个模拟的支付链接，让前端可以跳转
+    return NextResponse.json({
+      sessionId: `mock_session_${Date.now()}`,
+      paymentUrl: successUrl, // 直接使用我们构造的成功URL
+      transactionId: transactionId
+    });
     
   } catch (error) {
     console.error('处理购买请求错误:', error)
