@@ -56,7 +56,7 @@
 *   **数据 ?后端:** Supabase
 *   **UI 样式:** Tailwind CSS
 *   **UI 组件:** Shadcn UI
-*   **AI 服务:** OpenAI GPT API (或同类服 ? 阶段二引 ?
+*   **AI 服务:** 智谱AI GLM-4 API (在第二阶段引入)
 *   **部署:** Vercel
 
 ## ⚖️ 风险与考量 (Risks & Considerations)

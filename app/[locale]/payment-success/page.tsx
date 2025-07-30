@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { Container } from "@/components/ui";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 

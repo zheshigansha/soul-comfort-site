@@ -1,0 +1,13 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "treeHole": "Tree Hole",
+    "upgrade": "Upgrade",
+    "login": "Login",
+    "logout": "Logout",
+    "siteTitle": "Soul Comfort"
+  },
+  "QuoteCard": {
+    "getNewQuote": "Get new quote"
+  }
+} 

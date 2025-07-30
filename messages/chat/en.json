@@ -1,0 +1,41 @@
+{
+  "TreeHole": {
+    "title": "AI Tree Hole",
+    "description": "A safe space to share your thoughts and feelings. Our AI is here to listen and support you.",
+    "disclaimer": "Note: This is an AI assistant and not a substitute for professional mental health support. If you're experiencing serious issues, please seek help from qualified professionals.",
+    "startConversation": "Start a conversation by typing a message below..."
+  },
+  "Chat": {
+    "send": "Send",
+    "typing": "AI is typing...",
+    "startConversation": "Start a conversation by typing a message below...",
+    "inputPlaceholder": "Type your message here...",
+    "networkError": "Network error",
+    "emptyResponse": "Empty response",
+    "errorMessage": "Sorry, an error occurred. Please try again later.",
+    "usageCounter": "Used {count}/{limit} times",
+    "limitReachedMessage": "<p>You've reached your free usage limit. Upgrade to continue the conversation and enjoy unlimited access.</p>",
+    "upgradeNow": "Upgrade Now"
+  },
+  "Modes": {
+    "listeningMode": "Listening Mode",
+    "comfortMode": "Comfort Mode",
+    "challengeMode": "Mind Challenge Mode",
+    "debateMode": "Debate Training Mode",
+    "viewModeDescriptions": "View mode descriptions",
+    "hideModeDescriptions": "Hide mode descriptions",
+    "modeDescriptionsTitle": "Mode Descriptions:",
+    "listeningModeDesc": "AI will only listen to your thoughts without giving evaluations or suggestions",
+    "comfortModeDesc": "AI will provide gentle support and suggestions to help you feel at ease",
+    "challengeModeDesc": "AI will help you challenge thought patterns and provide new perspectives",
+    "debateModeDesc": "AI will engage in beneficial debate to help you strengthen your reasoning skills",
+    "listeningModeMessage": "Switched to Listening Mode. I'll focus on listening to your thoughts without offering evaluations or suggestions.",
+    "comfortModeMessage": "Switched to Comfort Mode. I'll provide gentle support and suggestions to help you feel at ease.",
+    "challengeModeMessage": "Switched to Mind Challenge Mode. I'll help you challenge thought patterns and provide new perspectives.",
+    "debateModeMessage": "Switched to Debate Training Mode. I'll engage in beneficial debate to help you strengthen your reasoning skills."
+  },
+  "Index": {
+    "treeHoleCard": "AI Emotional Support",
+    "treeHoleDescription": "Share your thoughts and feelings with our empathetic AI companion."
+  }
+} 

@@ -1,0 +1,18 @@
+{
+  "Payment": {
+    "paymentSuccessTitle": "Payment Successful!",
+    "paymentSuccessDescription": "Your payment has been completed and credits have been added to your account.",
+    "transactionDetails": "Transaction Details",
+    "packageName": "Package Name",
+    "creditsAdded": "Credits Added",
+    "transactionDate": "Transaction Date",
+    "backToChat": "Back to Chat",
+    "paymentErrorTitle": "Payment Failed",
+    "errorMissingParams": "Missing required parameters during payment processing.",
+    "errorTransactionNotFound": "Transaction record not found.",
+    "errorPaymentIncomplete": "Payment was not completed. Please try again.",
+    "errorVerificationFailed": "Payment verification failed. Please contact support.",
+    "errorServerError": "Server error while processing payment. Please try again later.",
+    "backToUpgrade": "Back to Upgrade Page"
+  }
+} 

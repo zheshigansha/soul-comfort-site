@@ -1,0 +1,40 @@
+{
+  "Navigation": {
+    "home": "首页",
+    "treeHole": "心灵树洞",
+    "upgrade": "升级",
+    "login": "登录",
+    "logout": "退出",
+    "siteTitle": "心灵慰藉"
+  },
+  "Index": {
+    "title": "欢迎来到心灵慰藉站",
+    "dailyQuote": "每一个黎明，都是新的开始。"
+  },
+  "QuoteCard": {
+    "getNewQuote": "获取新引言"
+  },
+  "Login": {
+    "title": "登录或注册",
+    "subtitle": "输入您的信息以访问您的账户",
+    "google_signin": "使用 Google 登录",
+    "or_continue_with": "或继续使用",
+    "no_account": "还没有账户？",
+    "button_loading": "加载中...",
+    "email_label": "邮箱地址",
+    "password_label_signin": "您的密码",
+    "password_label_signup": "创建密码",
+    "email_placeholder": "your.email@example.com",
+    "password_placeholder": "你的密码",
+    "button_signin": "登录",
+    "button_signup": "注册",
+    "button_forgot_password": "发送重置说明",
+    "button_magic_link": "发送魔法链接",
+    "social_provider_text": "通过 {{provider}} 登录",
+    "link_signin": "已有账户？登录",
+    "link_signup": "注册",
+    "link_forgot_password": "忘记密码？",
+    "link_magic_link": "通过魔法链接登录",
+    "return_home": "返回首页"
+  }
+} 

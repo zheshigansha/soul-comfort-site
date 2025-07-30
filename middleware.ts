@@ -1,16 +1,17 @@
 import createMiddleware from 'next-intl/middleware';
- 
+import { locales, defaultLocale } from './i18n/config';
+
 export default createMiddleware({
   // 支持的语言列表
-  locales: ['en', 'zh'],
- 
+  locales,
+
   // 默认语言
-  defaultLocale: 'en',
+  defaultLocale,
   
-  // 使用路径前缀进行国际化
-  localePrefix: 'always'
+  // 使用路径前缀进行国际化，但允许根路径重定向
+  localePrefix: 'as-needed'
 });
- 
+
 export const config = {
   // 匹配所有路径，除了以下特殊路径
   matcher: [

@@ -1,12 +1,25 @@
-process.env.ADMIN_KEY = "42d4089c1173f415b6ebeb58dbb16a8306d249e6a271320199e60c1bf555a20f";
-
 import { NextResponse } from "next/server";
-// import { getSiteUsage } from "@/lib/db-supabase"; // 移除数据库依赖
-// import { supabase } from "@/lib/supabase"; // 移除数据库依赖
+import { validateAdminKey } from "@/lib/config";
+import { logger } from "@/lib/logger";
+import { ApiResponse } from "@/types";
+
+// 强制动态渲染
+export const dynamic = 'force-dynamic'
+
+interface SiteUsage {
+  month: string;
+  total_count: number;
+  max_limit: number;
+}
+
+interface AdminRequestBody {
+  adminKey?: string;
+  maxLimit?: number;
+}
 
 // 模拟的获取站点使用情况函数
-async function getMockSiteUsage() {
-  console.log("正在使用模拟的 getSiteUsage 函数");
+async function getMockSiteUsage(): Promise<SiteUsage> {
+  logger.info("正在使用模拟的 getSiteUsage 函数");
   const currentMonth = new Date().toISOString().slice(0, 7);
   return Promise.resolve({
     month: currentMonth,
@@ -19,7 +32,12 @@ async function getMockSiteUsage() {
 export async function GET(request: Request) {
   try {
     const adminKey = request.headers.get('x-admin-key');
-    if (adminKey !== process.env.ADMIN_KEY) {
+    
+    if (!adminKey) {
+      return NextResponse.json({ error: "缺少管理员密钥" }, { status: 401 });
+    }
+    
+    if (!validateAdminKey(adminKey)) {
       return NextResponse.json({ error: "无权访问管理员API" }, { status: 403 });
     }
     
@@ -27,7 +45,7 @@ export async function GET(request: Request) {
     const data = await getMockSiteUsage();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("获取站点使用量错误:", error);
+    logger.error("获取站点使用量错误", error instanceof Error ? error : new Error(String(error)));
     return NextResponse.json({ 
       error: "获取站点使用量失败",
       message: error instanceof Error ? error.message : String(error)
@@ -39,11 +57,16 @@ export async function GET(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const { maxLimit, adminKey } = await request.json();
-    if (adminKey !== process.env.ADMIN_KEY) {
+    
+    if (!adminKey) {
+      return NextResponse.json({ error: "缺少管理员密钥" }, { status: 401 });
+    }
+    
+    if (!validateAdminKey(adminKey)) {
       return NextResponse.json({ error: "管理员密钥无效" }, { status: 403 });
     }
     
-    console.log(`模拟更新限制为: ${maxLimit}`);
+    logger.info(`管理员API：模拟更新限制为 ${maxLimit}`);
     // 直接返回成功的模拟数据
     return NextResponse.json([{
       month: new Date().toISOString().slice(0, 7),
@@ -51,7 +74,7 @@ export async function PATCH(request: Request) {
       total_count: 123 // 维持模拟数据
     }]);
   } catch (error) {
-    console.error("更新站点使用量限制错误:", error);
+    logger.error("更新站点使用量限制错误", error instanceof Error ? error : new Error(String(error)));
     return NextResponse.json({ 
       error: "更新站点使用量限制失败",
       message: error instanceof Error ? error.message : String(error)
@@ -63,11 +86,16 @@ export async function PATCH(request: Request) {
 export async function POST(request: Request) {
   try {
     const { adminKey } = await request.json();
-    if (adminKey !== process.env.ADMIN_KEY) {
+    
+    if (!adminKey) {
+      return NextResponse.json({ error: "缺少管理员密钥" }, { status: 401 });
+    }
+    
+    if (!validateAdminKey(adminKey)) {
       return NextResponse.json({ error: "管理员密钥无效" }, { status: 403 });
     }
 
-    console.log("模拟重置使用量计数");
+    logger.info("管理员API：模拟重置使用量计数");
     return NextResponse.json({ 
       message: "使用量计数已成功模拟重置", 
       data: [{
@@ -77,7 +105,7 @@ export async function POST(request: Request) {
       }] 
     });
   } catch (error) {
-    console.error("重置使用量计数错误:", error);
+    logger.error("重置使用量计数错误", error instanceof Error ? error : new Error(String(error)));
     return NextResponse.json({ 
       error: "重置使用量计数失败",
       message: error instanceof Error ? error.message : String(error)
@@ -85,10 +113,10 @@ export async function POST(request: Request) {
   }
 }
 
-// 辅助端点 - 检查环境变量是否正确加载
+// 辅助端点 - 检查环境变量是否正确加载（仅检查是否设置，不泄露值）
 export async function OPTIONS() {
   try {
-    const adminKeyStatus = process.env.ADMIN_KEY ? `已设置 (长度: ${process.env.ADMIN_KEY.length})` : "未设置";
+    const adminKeyStatus = process.env.ADMIN_KEY ? "已设置" : "未设置";
     const supabaseUrlStatus = process.env.NEXT_PUBLIC_SUPABASE_URL ? "已设置" : "未设置";
     const supabaseKeyStatus = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "已设置" : "未设置";
     

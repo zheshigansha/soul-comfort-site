@@ -2,6 +2,9 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
+// 强制动态渲染
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams

@@ -3,6 +3,9 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { capturePayPalOrder } from '@/lib/paypal-client'
 
+// 强制动态渲染
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   // 关键改动：将 searchParams 和 locale 的定义提升到 try-catch 外部
   const searchParams = req.nextUrl.searchParams

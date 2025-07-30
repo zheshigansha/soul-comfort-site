@@ -3,29 +3,70 @@
     "title": "Welcome to Soul Comfort Site",
     "dailyQuote": "Every dawn is a new beginning.",
     "treeHoleCard": "AI Emotional Support",
-    "treeHoleDescription": "Share your thoughts and feelings with our empathetic AI companion."
+    "treeHoleDescription": "Share your thoughts and feelings with our empathetic AI companion.",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
   },
   "Navigation": {
     "home": "Home",
-    "treeHole": "Tree Hole"
+    "treeHole": "Tree Hole",
+    "upgrade": "Upgrade",
+    "login": "Login",
+    "logout": "Logout",
+    "siteTitle": "Soul Comfort",
+    "admin": "Admin"
+  },
+  "Navbar": {
+    "home": "Home",
+    "treeHole": "Tree Hole", 
+    "upgrade": "Upgrade",
+    "settings": "Settings",
+    "profile": "Profile",
+    "admin": "Admin"
   },
   "TreeHole": {
     "title": "AI Tree Hole",
     "description": "A safe space to share your thoughts and feelings. Our AI is here to listen and support you.",
     "disclaimer": "Note: This is an AI assistant and not a substitute for professional mental health support. If you're experiencing serious issues, please seek help from qualified professionals.",
-    "startConversation": "Start a conversation by typing a message below..."
+    "startConversation": "Start a conversation by typing a message below...",
+    "welcomeMessage": "Welcome to the Tree Hole. I'm here to listen and support you.",
+    "thinking": "Thinking...",
+    "typeMessage": "Type your message...",
+    "maintenance": "Under Maintenance",
+    "maintenanceMessage": "The AI chat feature is currently under technical maintenance. We're working to improve service quality. Please try again later.",
+    "thankYou": "Thank you for your patience"
   },
   "Chat": {
     "send": "Send",
     "typing": "AI is typing...",
     "startConversation": "Start a conversation by typing a message below...",
-    "inputPlaceholder": "Type your message here..."
+    "inputPlaceholder": "Type your message here...",
+    "networkError": "Network error",
+    "emptyResponse": "Empty response",
+    "errorMessage": "Sorry, an error occurred. Please try again later.",
+    "usageCounter": "Used {count}/{limit} times",
+    "limitReachedMessage": "You've reached your free usage limit. Upgrade to continue the conversation and enjoy unlimited access.",
+    "upgradeNow": "Upgrade Now",
+    "send": "Send",
+    "continueConversation": "Continue Conversation",
+    "newConversation": "New Conversation"
   },
   "Modes": {
     "listeningMode": "Listening Mode",
     "comfortMode": "Comfort Mode",
     "challengeMode": "Mind Challenge Mode",
     "debateMode": "Debate Training Mode",
+    "viewModeDescriptions": "View mode descriptions",
+    "hideModeDescriptions": "Hide mode descriptions",
+    "modeDescriptionsTitle": "Mode Descriptions:",
+    "listeningModeDesc": "AI will only listen to your thoughts without giving evaluations or suggestions",
+    "comfortModeDesc": "AI will provide gentle support and suggestions to help you feel at ease",
+    "challengeModeDesc": "AI will help you challenge thought patterns and provide new perspectives",
+    "debateModeDesc": "AI will engage in beneficial debate to help you strengthen your reasoning skills",
+    "listeningModeMessage": "Switched to Listening Mode. I'll focus on listening to your thoughts without offering evaluations or suggestions.",
+    "comfortModeMessage": "Switched to Comfort Mode. I'll provide gentle support and suggestions to help you feel at ease.",
+    "challengeModeMessage": "Switched to Mind Challenge Mode. I'll help you challenge thought patterns and provide new perspectives.",
+    "debateModeMessage": "Switched to Debate Training Mode. I'll engage in beneficial debate to help you strengthen your reasoning skills.",
     "viewModeDescriptions": "View mode descriptions",
     "hideModeDescriptions": "Hide mode descriptions",
     "modeDescriptionsTitle": "Mode Descriptions:"
@@ -41,18 +82,34 @@
     "errorPaymentInit": "Failed to initialize payment. Please try again.",
     "errorInvalidUrl": "Invalid payment link received. Please contact support.",
     "noPackages": "No packages available at this time. Please check back later.",
+    "package": {
+      "basic": {
+        "name": "Basic Package",
+        "description": "Perfect for occasional users."
+      },
+      "standard": {
+        "name": "Standard Package",
+        "description": "Our most popular package."
+      },
+      "premium": {
+        "name": "Premium Package",
+        "description": "Ideal for heavy users."
+      }
+    },
+    "credits": "{count, plural, =1 {# credit} other {# credits}}",
     "name_basic": "Basic Package",
     "desc_basic": "Perfect for occasional users.",
-    "name_standard": "Standard Package",
+    "name_standard": "Standard Package", 
     "desc_standard": "Our most popular package.",
     "name_premium": "Premium Package",
     "desc_premium": "Ideal for heavy users.",
-    "credits": "{count, plural, =1 {# credit} other {# credits}}"
+    "features": {
+      "unlimited": "Unlimited conversations",
+      "priority": "Priority support",
+      "advanced": "Advanced AI features"
+    }
   },
-  "Navbar": {
-    "home": "Home",
-    "treeHole": "Tree Hole"
-  },
+
   "Payment": {
     "paymentSuccessTitle": "Payment Successful!",
     "paymentSuccessDescription": "Your payment has been completed and credits have been added to your account.",
@@ -67,7 +124,39 @@
     "errorPaymentIncomplete": "Payment was not completed. Please try again.",
     "errorVerificationFailed": "Payment verification failed. Please contact support.",
     "errorServerError": "Server error while processing payment. Please try again later.",
-    "backToUpgrade": "Back to Upgrade Page"
+    "backToUpgrade": "Back to Upgrade Page",
+    "processing": "Processing your payment...",
+    "redirecting": "Redirecting to payment..."
+  },
+  "QuoteCard": {
+    "getNewQuote": "Get new quote",
+    "loading": "Loading quotes...",
+    "error": "Could not load quote"
+  },
+  "UpgradePrompt": {
+    "title": "Upgrade Your Plan",
+    "subscriptionTab": "Subscription",
+    "creditsTab": "Credits",
+    "monthlyPlan": "Monthly Plan",
+    "monthlyDescription": "Unlimited AI conversations for 30 days",
+    "quarterlyPlan": "Quarterly Plan",
+    "quarterlyDescription": "Unlimited AI conversations for 90 days",
+    "annualPlan": "Annual Plan",
+    "annualDescription": "Unlimited AI conversations for 365 days",
+    "bestValue": "Best value",
+    "conversations50": "50 Conversations",
+    "conversations50Desc": "50 AI conversations, never expires",
+    "conversations120": "120 Conversations",
+    "conversations120Desc": "120 AI conversations, never expires",
+    "popularChoice": "Popular choice",
+    "conversations300": "300 Conversations",
+    "conversations300Desc": "300 AI conversations, never expires",
+    "securePayment": "Secure payment provided by Creem",
+    "paymentFailed": "Payment failed",
+    "processing": "Processing...",
+    "pleaseWait": "Please wait...",
+    "purchaseButton": "Purchase",
+    "buttonProcessing": "Processing..."
   },
   "Login": {
     "title": "Sign In or Sign Up",
@@ -90,6 +179,74 @@
     "link_signup": "Sign up",
     "link_forgot_password": "Forgot your password?",
     "link_magic_link": "Sign in with Magic Link",
-    "return_home": "Return to Home"
+    "return_home": "Return to Home",
+    "invalid_email": "Please enter a valid email address",
+    "password_too_short": "Password must be at least 6 characters",
+    "login_failed": "Login failed. Please check your credentials.",
+    "signup_failed": "Sign up failed. Please try again."
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "loading_more": "Loading more...",
+    "no_data": "No data available",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "copied": "Copied!",
+    "share": "Share",
+    "download": "Download",
+    "upload": "Upload",
+    "settings": "Settings",
+    "help": "Help",
+    "support": "Support",
+    "feedback": "Feedback",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact"
+  },
+  "Admin": {
+    "title": "Admin Dashboard",
+    "usageStats": "Usage Statistics",
+    "totalUsers": "Total Users",
+    "totalUsage": "Total Usage",
+    "premiumUsers": "Premium Users",
+    "freeUsers": "Free Users",
+    "usageLimit": "Usage Limit",
+    "currentLimit": "Current Limit",
+    "setLimit": "Set Limit",
+    "resetUsage": "Reset Usage",
+    "exportData": "Export Data",
+    "importData": "Import Data",
+    "backupData": "Backup Data",
+    "adminKeyRequired": "Admin key required",
+    "invalidAdminKey": "Invalid admin key",
+    "accessDenied": "Access denied"
+  },
+  "Errors": {
+    "404": "Page not found",
+    "500": "Internal server error",
+    "network_error": "Network connection error",
+    "timeout": "Request timeout",
+    "invalid_request": "Invalid request",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access forbidden",
+    "not_found": "Resource not found",
+    "server_error": "Server error occurred"
   }
 }

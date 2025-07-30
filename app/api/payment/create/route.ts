@@ -3,6 +3,9 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { createPayPalOrder } from '@/lib/paypal-client'
 
+// 强制动态渲染
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
   try {
     const supabase = createRouteHandlerClient({ cookies })

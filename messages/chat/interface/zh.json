@@ -1,0 +1,20 @@
+{
+  "Chat": {
+    "send": "发送",
+    "typing": "AI正在输入...",
+    "startConversation": "开始一段对话，在下方输入消息...",
+    "inputPlaceholder": "在这里输入你的消息...",
+    "networkError": "网络错误",
+    "emptyResponse": "空响应",
+    "errorMessage": "抱歉，发生了错误。请稍后再试。",
+    "usageCounter": "已使用 {count}/{limit} 次",
+    "limitReachedMessage": "<p>您已达到免费使用限制。升级以继续对话并享受无限访问。</p>",
+    "upgradeNow": "立即升级"
+  },
+  "TreeHole": {
+    "title": "AI树洞",
+    "description": "一个安全分享你的想法和感受的空间。我们的AI在这里倾听和支持你。",
+    "disclaimer": "注意：这是一个AI助手，不能替代专业的心理健康支持。如果您正在经历严重问题，请寻求合格专业人士的帮助。",
+    "startConversation": "开始一段对话，在下方输入消息..."
+  }
+} 

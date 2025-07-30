@@ -1,0 +1,18 @@
+{
+  "Payment": {
+    "paymentSuccessTitle": "支付成功！",
+    "paymentSuccessDescription": "您的支付已完成，对话次数已添加到您的账户。",
+    "transactionDetails": "交易详情",
+    "packageName": "套餐名称",
+    "creditsAdded": "添加的对话次数",
+    "transactionDate": "交易日期",
+    "backToChat": "返回聊天",
+    "paymentErrorTitle": "支付失败",
+    "errorMissingParams": "支付处理过程中缺少必要参数。",
+    "errorTransactionNotFound": "未找到交易记录。",
+    "errorPaymentIncomplete": "支付未完成。请重试。",
+    "errorVerificationFailed": "支付验证失败。请联系客服。",
+    "errorServerError": "处理支付时发生服务器错误。请稍后再试。",
+    "backToUpgrade": "返回升级页面"
+  }
+} 

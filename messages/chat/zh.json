@@ -1,0 +1,41 @@
+{
+  "TreeHole": {
+    "title": "AI 树洞",
+    "description": "这是一个安全分享您想法和感受的空间。我们的AI助手在这里倾听和支持您。",
+    "disclaimer": "注意：这是一个AI助手，不能替代专业的心理健康支持。如果您正经历严重问题，请寻求专业人士的帮助。",
+    "startConversation": "在下方输入消息开始对话..."
+  },
+  "Chat": {
+    "send": "发送",
+    "typing": "AI正在输入...",
+    "startConversation": "在下方输入消息开始对话...",
+    "inputPlaceholder": "在这里输入您的消息...",
+    "networkError": "网络错误",
+    "emptyResponse": "响应体为空",
+    "errorMessage": "抱歉，发生了错误，请稍后再试。",
+    "usageCounter": "已使用 {count}/{limit} 次",
+    "limitReachedMessage": "<p>您已达到免费使用次数上限。升级后可继续对话并享受无限访问权限。</p>",
+    "upgradeNow": "立即升级"
+  },
+  "Modes": {
+    "listeningMode": "倾听模式",
+    "comfortMode": "安慰模式",
+    "challengeMode": "思维挑战模式",
+    "debateMode": "辩论训练模式",
+    "viewModeDescriptions": "查看模式说明",
+    "hideModeDescriptions": "隐藏模式说明",
+    "modeDescriptionsTitle": "模式说明：",
+    "listeningModeDesc": "AI只会倾听你的想法，不会给出评价或建议",
+    "comfortModeDesc": "AI会提供温和的支持和建议，帮助你感到安心",
+    "challengeModeDesc": "AI会帮助你挑战思维模式，提供新的视角",
+    "debateModeDesc": "AI会与你进行有益的辩论，帮助你增强推理能力",
+    "listeningModeMessage": "已切换到倾听模式。我会专注于倾听您的想法，不会给出评价或建议。",
+    "comfortModeMessage": "已切换到安慰模式。我会提供温和的支持和建议，帮助您感到安心。",
+    "challengeModeMessage": "已切换到思维挑战模式。我会帮助您挑战思维模式，提供新的视角。",
+    "debateModeMessage": "已切换到辩论训练模式。我会与您进行有益的辩论，帮助您锻炼思维能力。"
+  },
+  "Index": {
+    "treeHoleCard": "AI情感树洞",
+    "treeHoleDescription": "与我们富有同理心的AI伙伴分享你的想法和感受。"
+  }
+} 

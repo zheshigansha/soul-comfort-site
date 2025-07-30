@@ -3,8 +3,8 @@
     import { type ReactNode } from 'react';
     import { NextIntlClientProvider } from 'next-intl';
     import { getMessages } from 'next-intl/server';
-    import { Navbar } from '@/components/ui/Navbar'; // 导入我们新的服务端 Navbar
-    import { ClientProvider} from './providers'; // 确保这个路径正确
+    import { Navbar } from '@/components/layouts';
+    import { ClientProvider} from './providers.js'; // 确保这个路径正确
     import { type Metadata } from 'next';
 
     interface Props {
@@ -26,19 +26,20 @@
     export default async function LocaleLayout({ children, params: { locale } }: Props) {
       const messages = await getMessages();
 
+      // 将zh-CN简化为zh，确保客户端和服务器端一致
+      const htmlLang = locale === 'zh' ? 'zh' : locale;
+
       return (
-        <html lang={locale}>
+        <html lang={htmlLang}>
           <body>
             {/*
-              * 关键改动:
-              * 1. 将 Navbar 移出 NextIntlClientProvider。
-              *    这样，作为服务端组件的 Navbar 就可以在服务端正确渲染，
-              *    而不会被客户端组件包裹，从而避免了水合作用错误。
-              * 2. 将需要客户端上下文的 {children} (即页面内容) 保留在 Provider 内部。
+              * 修改后的布局:
+              * 由于Navbar现在是客户端组件，需要将其放入NextIntlClientProvider内部
+              * 以便它可以使用国际化翻译
             */}
             <div className="flex flex-col min-h-screen">
-              <Navbar />
-              <NextIntlClientProvider messages={messages}>
+              <NextIntlClientProvider messages={messages} locale={locale}>
+                <Navbar />
                 <ClientProvider>
                   <main className="flex-grow">{children}</main>
                 </ClientProvider>

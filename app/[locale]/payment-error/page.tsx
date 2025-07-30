@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { Container } from "@/components/ui";
 import { AlertCircle, ArrowLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 

@@ -1,0 +1,19 @@
+{
+  "Modes": {
+    "listeningMode": "Listening Mode",
+    "comfortMode": "Comfort Mode",
+    "challengeMode": "Mind Challenge Mode",
+    "debateMode": "Debate Training Mode",
+    "viewModeDescriptions": "View mode descriptions",
+    "hideModeDescriptions": "Hide mode descriptions",
+    "modeDescriptionsTitle": "Mode Descriptions:",
+    "listeningModeDesc": "AI will only listen to your thoughts without giving evaluations or suggestions",
+    "comfortModeDesc": "AI will provide gentle support and suggestions to help you feel at ease",
+    "challengeModeDesc": "AI will help you challenge thought patterns and provide new perspectives",
+    "debateModeDesc": "AI will engage in beneficial debate to help you strengthen your reasoning skills",
+    "listeningModeMessage": "Switched to Listening Mode. I'll focus on listening to your thoughts without offering evaluations or suggestions.",
+    "comfortModeMessage": "Switched to Comfort Mode. I'll provide gentle support and suggestions to help you feel at ease.",
+    "challengeModeMessage": "Switched to Mind Challenge Mode. I'll help you challenge thought patterns and provide new perspectives.",
+    "debateModeMessage": "Switched to Debate Training Mode. I'll engage in beneficial debate to help you strengthen your reasoning skills."
+  }
+} 

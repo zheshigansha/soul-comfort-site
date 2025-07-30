@@ -3,23 +3,73 @@
     "title": "欢迎来到心灵慰藉站",
     "dailyQuote": "每一个黎明，都是新的开始。",
     "treeHoleCard": "AI情感树洞",
-    "treeHoleDescription": "与我们富有同理心的AI伙伴分享你的想法和感受。"
+    "treeHoleDescription": "与我们富有同理心的AI伙伴分享你的想法和感受。",
+    "getStarted": "开始使用",
+    "learnMore": "了解更多"
   },
   "Navigation": {
     "home": "首页",
-    "treeHole": "心灵树洞"
+    "treeHole": "心灵树洞",
+    "upgrade": "升级",
+    "login": "登录",
+    "logout": "退出",
+    "siteTitle": "心灵慰藉",
+    "admin": "管理后台"
+  },
+  "Navbar": {
+    "home": "首页",
+    "treeHole": "树洞",
+    "upgrade": "升级", 
+    "settings": "设置",
+    "profile": "个人资料",
+    "admin": "管理后台"
   },
   "TreeHole": {
     "title": "AI 树洞",
     "description": "这是一个安全分享您想法和感受的空间。我们的AI助手在这里倾听和支持您。",
     "disclaimer": "注意：这是一个AI助手，不能替代专业的心理健康支持。如果您正经历严重问题，请寻求专业人士的帮助。",
-    "startConversation": "在下方输入消息开始对话..."
+    "startConversation": "在下方输入消息开始对话...",
+    "welcomeMessage": "欢迎来到树洞。我在这里倾听和支持您。",
+    "thinking": "思考中...",
+    "typeMessage": "输入您的消息...",
+    "maintenance": "功能维护中",
+    "maintenanceMessage": "AI聊天功能正在进行技术维护，我们正在优化服务质量。请稍后再试。",
+    "thankYou": "感谢您的耐心等待"
   },
   "Chat": {
     "send": "发送",
     "typing": "AI正在输入...",
     "startConversation": "在下方输入消息开始对话...",
-    "inputPlaceholder": "在这里输入您的消息..."
+    "inputPlaceholder": "在这里输入您的消息...",
+    "networkError": "网络错误",
+    "emptyResponse": "响应体为空",
+    "errorMessage": "抱歉，发生了错误，请稍后再试。",
+    "usageCounter": "已使用 {count}/{limit} 次",
+    "limitReachedMessage": "<p>您已达到免费使用次数上限。升级后可继续对话并享受无限访问权限。</p>",
+    "upgradeNow": "立即升级",
+    "send": "发送",
+    "continueConversation": "继续对话",
+    "newConversation": "新对话"
+  },
+  "Modes": {
+    "listeningMode": "倾听模式",
+    "comfortMode": "安慰模式",
+    "challengeMode": "思维挑战模式",
+    "debateMode": "辩论训练模式",
+    "viewModeDescriptions": "查看模式说明",
+    "hideModeDescriptions": "隐藏模式说明",
+    "modeDescriptionsTitle": "模式说明：",
+    "listeningModeDesc": "AI只会倾听你的想法，不会给出评价或建议",
+    "comfortModeDesc": "AI会提供温和的支持和建议，帮助你感到安心",
+    "challengeModeDesc": "AI会帮助你挑战思维模式，提供新的视角",
+    "debateModeDesc": "AI会与你进行有益的辩论，帮助你增强推理能力",
+    "listeningModeMessage": "已切换到倾听模式。我会专注于倾听您的想法，不会给出评价或建议。",
+    "comfortModeMessage": "已切换到安慰模式。我会提供温和的支持和建议，帮助您感到安心。",
+    "challengeModeMessage": "已切换到思维挑战模式。我会帮助您挑战思维模式，提供新的视角。",
+    "debateModeMessage": "已切换到辩论训练模式。我会与您进行有益的辩论，帮助您锻炼思维能力。",
+    "viewModeDescriptions": "查看模式说明",
+    "hideModeDescriptions": "隐藏模式说明",
+    "modeDescriptionsTitle": "模式说明："
   },
   "UpgradePage": {
     "title": "升级您的套餐",
@@ -38,7 +88,26 @@
     "desc_standard": "我们最受欢迎的套餐。",
     "name_premium": "高级套餐",
     "desc_premium": "适合重度使用的用户。",
-    "credits": "{count} 次对话"
+    "credits": "{count} 次对话",
+    "package": {
+      "basic": {
+        "name": "基础套餐",
+        "description": "适合偶尔使用的用户。"
+      },
+      "standard": {
+        "name": "标准套餐",
+        "description": "我们最受欢迎的套餐。"
+      },
+      "premium": {
+        "name": "高级套餐",
+        "description": "适合重度使用的用户。"
+      }
+    },
+    "features": {
+      "unlimited": "无限对话",
+      "priority": "优先支持",
+      "advanced": "高级AI功能"
+    }
   },
   "Payment": {
     "paymentSuccessTitle": "支付成功！",
@@ -54,7 +123,39 @@
     "errorPaymentIncomplete": "支付未完成，请重试。",
     "errorVerificationFailed": "支付验证失败，请联系客服。",
     "errorServerError": "服务器处理支付时出错，请稍后重试。",
-    "backToUpgrade": "返回升级页面"
+    "backToUpgrade": "返回升级页面",
+    "processing": "正在处理您的支付...",
+    "redirecting": "正在跳转到支付..."
+  },
+  "QuoteCard": {
+    "getNewQuote": "获取新引言",
+    "loading": "加载中...",
+    "error": "无法加载引言"
+  },
+  "UpgradePrompt": {
+    "title": "升级您的方案",
+    "subscriptionTab": "会员订阅",
+    "creditsTab": "购买积分",
+    "monthlyPlan": "月度会员",
+    "monthlyDescription": "每日无限AI对话，为期30天",
+    "quarterlyPlan": "季度会员",
+    "quarterlyDescription": "每日无限AI对话，为期90天",
+    "annualPlan": "年度会员",
+    "annualDescription": "每日无限AI对话，为期365天",
+    "bestValue": "最具性价比",
+    "conversations50": "50次对话",
+    "conversations50Desc": "50次AI对话，不限时间使用",
+    "conversations120": "120次对话",
+    "conversations120Desc": "120次AI对话，不限时间使用",
+    "popularChoice": "热门选择",
+    "conversations300": "300次对话",
+    "conversations300Desc": "300次AI对话，不限时间使用",
+    "securePayment": "支付安全由Creem保障",
+    "paymentFailed": "支付失败",
+    "processing": "处理中...",
+    "pleaseWait": "请稍候...",
+    "purchaseButton": "购买",
+    "buttonProcessing": "处理中..."
   },
   "Login": {
     "title": "登录或注册",
@@ -77,10 +178,82 @@
     "link_signup": "注册",
     "link_forgot_password": "忘记密码？",
     "link_magic_link": "通过魔法链接登录",
-    "return_home": "返回首页"
+    "return_home": "返回首页",
+    "invalid_email": "请输入有效的邮箱地址",
+    "password_too_short": "密码至少需要6个字符",
+    "login_failed": "登录失败。请检查您的凭据。",
+    "signup_failed": "注册失败。请重试。"
   },
   "Navbar": {
     "home": "首页",
-    "treeHole": "树洞"
+    "treeHole": "树洞",
+    "upgrade": "升级",
+    "settings": "设置",
+    "profile": "个人资料",
+    "admin": "管理后台"
+  },
+  "Common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "submit": "提交",
+    "reset": "重置",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "loading_more": "加载更多...",
+    "no_data": "暂无数据",
+    "retry": "重试",
+    "refresh": "刷新",
+    "copied": "已复制！",
+    "share": "分享",
+    "download": "下载",
+    "upload": "上传",
+    "settings": "设置",
+    "help": "帮助",
+    "support": "支持",
+    "feedback": "反馈",
+    "about": "关于",
+    "privacy": "隐私",
+    "terms": "条款",
+    "contact": "联系"
+  },
+  "Admin": {
+    "title": "管理后台",
+    "usageStats": "使用统计",
+    "totalUsers": "总用户数",
+    "totalUsage": "总使用次数",
+    "premiumUsers": "付费用户",
+    "freeUsers": "免费用户",
+    "usageLimit": "使用限制",
+    "currentLimit": "当前限制",
+    "setLimit": "设置限制",
+    "resetUsage": "重置使用",
+    "exportData": "导出数据",
+    "importData": "导入数据",
+    "backupData": "备份数据",
+    "adminKeyRequired": "需要管理员密钥",
+    "invalidAdminKey": "管理员密钥无效",
+    "accessDenied": "访问被拒绝"
+  },
+  "Errors": {
+    "404": "页面未找到",
+    "500": "服务器内部错误",
+    "network_error": "网络连接错误",
+    "timeout": "请求超时",
+    "invalid_request": "无效请求",
+    "unauthorized": "未授权访问",
+    "forbidden": "访问被禁止",
+    "not_found": "资源未找到",
+    "server_error": "服务器发生错误"
   }
 }

@@ -9,6 +9,9 @@ import { NextRequest, NextResponse } from 'next/server'
 // 初始化Creem客户端
 // const creem = new CreamClient(process.env.CREEM_API_KEY) // <--- 注释掉客户端初始化
 
+// 强制动态渲染
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
   try {
     const supabase = createRouteHandlerClient({ cookies })

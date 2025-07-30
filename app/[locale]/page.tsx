@@ -1,15 +1,15 @@
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { Container } from '@/components/ui/Container';
-import { QuoteCard } from '@/components/ui/QuoteCard';
+import { getTranslations } from 'next-intl/server';
+import { Container } from '@/components/ui';
+import { QuoteCard } from '@/components/common';
 import { getRandomQuote } from '@/lib/quotes';
 import { MessageSquareHeart } from 'lucide-react';
 
-export default function Home({ params }: { params: { locale: string } }) {
-  const t = useTranslations('Index');
+export default async function Home({ params }: { params: { locale: string } }) {
+  const t = await getTranslations('Index');
   const { locale } = params;
   
-  // 获取一条随机句子作为初始数据
+  // 在服务端生成随机句子，确保SSR和CSR一致性
   const initialQuote = getRandomQuote();
 
   return (

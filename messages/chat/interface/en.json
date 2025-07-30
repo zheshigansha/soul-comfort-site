@@ -1,0 +1,20 @@
+{
+  "Chat": {
+    "send": "Send",
+    "typing": "AI is typing...",
+    "startConversation": "Start a conversation by typing a message below...",
+    "inputPlaceholder": "Type your message here...",
+    "networkError": "Network error",
+    "emptyResponse": "Empty response",
+    "errorMessage": "Sorry, an error occurred. Please try again later.",
+    "usageCounter": "Used {count}/{limit} times",
+    "limitReachedMessage": "<p>You've reached your free usage limit. Upgrade to continue the conversation and enjoy unlimited access.</p>",
+    "upgradeNow": "Upgrade Now"
+  },
+  "TreeHole": {
+    "title": "AI Tree Hole",
+    "description": "A safe space to share your thoughts and feelings. Our AI is here to listen and support you.",
+    "disclaimer": "Note: This is an AI assistant and not a substitute for professional mental health support. If you're experiencing serious issues, please seek help from qualified professionals.",
+    "startConversation": "Start a conversation by typing a message below..."
+  }
+} 

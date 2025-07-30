@@ -6,6 +6,9 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // const creem = new CreemClient(process.env.CREEM_API_KEY || '');
 
+// 强制动态渲染
+export const dynamic = 'force-dynamic'
+
 // POST: 创建新订阅
 export async function POST(req: NextRequest) {
   try {

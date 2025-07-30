@@ -1,0 +1,13 @@
+{
+  "Navigation": {
+    "home": "首页",
+    "treeHole": "心灵树洞",
+    "upgrade": "升级",
+    "login": "登录",
+    "logout": "退出",
+    "siteTitle": "心灵慰藉"
+  },
+  "QuoteCard": {
+    "getNewQuote": "获取新引言"
+  }
+} 

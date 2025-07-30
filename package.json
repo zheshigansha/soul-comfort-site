@@ -3,10 +3,19 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
+        "dev": "node scripts/check-env.js && node scripts/init-storage.js && next dev",
+        "dev:simple": "node start-dev.js",
+        "build": "node scripts/check-env.js && node scripts/init-storage.js && next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "env:check": "node scripts/check-env.js",
+        "env:setup": "node scripts/setup-env.js",
+        "i18n:validate": "node scripts/validate-translations.js",
+        "storage:init": "node scripts/init-storage.js",
+        "storage:backup": "node -e \"require('./lib/migrations').createBackup().then(console.log)\"",
+        "storage:restore": "node -e \"const fs=require('fs'); const data=fs.readFileSync(process.argv[2], 'utf8'); require('./lib/migrations').restoreFromBackup(data)\"",
+        "storage:stats": "node -e \"require('./lib/storage').getStorageStats().then(console.log)\"",
+        "storage:cleanup": "node -e \"require('./lib/migrations').autoCleanup().then(console.log)\""
     },
     "dependencies": {
         "@anthropic-ai/sdk": "^0.55.0",

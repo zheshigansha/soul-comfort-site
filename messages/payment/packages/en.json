@@ -1,0 +1,42 @@
+{
+  "UpgradePage": {
+    "title": "Upgrade Your Plan",
+    "description": "Choose the package that's right for you and unlock more features.",
+    "purchaseButton": "Purchase",
+    "loginPrompt": "Please log in to view available packages.",
+    "loginButton": "Log In",
+    "buttonProcessing": "Processing...",
+    "errorLoadPackages": "Could not load packages. Please try again later.",
+    "errorPaymentInit": "Failed to initialize payment. Please try again.",
+    "errorInvalidUrl": "Invalid payment link received. Please contact support.",
+    "noPackages": "No packages available at this time. Please check back later.",
+    "name_basic": "Basic Package",
+    "desc_basic": "Perfect for occasional users.",
+    "name_standard": "Standard Package",
+    "desc_standard": "Our most popular package.",
+    "name_premium": "Premium Package",
+    "desc_premium": "Ideal for heavy users.",
+    "credits": "{count, plural, =1 {# credit} other {# credits}}"
+  },
+  "UpgradePrompt": {
+    "title": "Upgrade Your Plan",
+    "subscriptionTab": "Subscription",
+    "creditsTab": "Credits",
+    "monthlyPlan": "Monthly Plan",
+    "monthlyDescription": "Unlimited AI conversations for 30 days",
+    "quarterlyPlan": "Quarterly Plan",
+    "quarterlyDescription": "Unlimited AI conversations for 90 days",
+    "annualPlan": "Annual Plan",
+    "annualDescription": "Unlimited AI conversations for 365 days",
+    "bestValue": "Best value",
+    "conversations50": "50 Conversations",
+    "conversations50Desc": "50 AI conversations, never expires",
+    "conversations120": "120 Conversations",
+    "conversations120Desc": "120 AI conversations, never expires",
+    "popularChoice": "Popular choice",
+    "conversations300": "300 Conversations",
+    "conversations300Desc": "300 AI conversations, never expires",
+    "securePayment": "Secure payment provided by Creem",
+    "paymentFailed": "Payment failed"
+  }
+} 
